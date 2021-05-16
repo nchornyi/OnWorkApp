@@ -6,13 +6,13 @@
         <!-- Application resource dictionary -->
         <ResourceDictionary>
             <!--Button NavigationBar StackLayout Style-->
-            <Style x:Key="ButtonNavigationBarStackLayoutStyle" TargetType="StackLayout">
+            <Style x:Key="ButtonNavigationBarStackLayoutStyle" TargetType="Grid">
                 <Setter Property="VerticalOptions" Value="FillAndExpand" />
                 <Setter Property="HorizontalOptions" Value="FillAndExpand" />
             </Style>
             <!--Button NavigationBar Label Style-->
             <Style x:Key="ButtonNavigationBarLabelStyle" TargetType="Label">
-                <Setter Property="Margin" Value="0,0,0,0" />
+                <Setter Property="Margin" Value="0,-10,0,0" />
                 <Setter Property="HorizontalTextAlignment" Value="Center" />
                 <Setter Property="TextColor" Value="Black" />
             </Style>

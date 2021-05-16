@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OnWork.Pages.PageTasks"
+             >
+    <ContentPage.Resources>
+        <!--<ResourceDictionary>
+            <x:Array x:Key="Tasks" Type="{x:Type x:String}">
+                <x:String>test1</x:String>
+                <x:String>test2</x:String>
+                <x:String>test3</x:String>
+                <x:String>test4</x:String>
+                <x:String>test5</x:String>
+            </x:Array>
+        </ResourceDictionary>-->
+    </ContentPage.Resources>
+    <StackLayout>
+        <!--<Label Text="Task list" HorizontalOptions="Center" FontSize="Large" />-->
+        <ListView x:Name="TasksList" SeparatorColor="Black" RefreshControlColor="Black" 
+                  ItemTapped="TasksList_ItemTapped" >
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout BackgroundColor="#eee"
+                        Orientation="Vertical">
+                            <StackLayout Orientation="Horizontal">
+                                <Image Source="{Binding LocationIcon}"  Scale="1" />
+                                <Label Text="{Binding Title}"
+                                TextColor="#f35e20" />
+                                <Label Text="{Binding Desc}"
+                                HorizontalOptions="EndAndExpand"
+                                TextColor="#503026" />
+                            </StackLayout>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+                <!--<DataTemplate>
+                    <ImageCell Text="{Binding Title}"
+                               Detail="{Binding Desc}"
+                               ImageSource="{Binding LocationIcon}"
+                               TextColor="Black"
+                               DetailColor="DarkOrange" />
+                </DataTemplate>-->
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+</ContentPage>

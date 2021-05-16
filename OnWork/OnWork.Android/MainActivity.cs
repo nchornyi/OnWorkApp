@@ -1,9 +1,11 @@
 ﻿using System;
-
 using Android.App;
 using Android.Content.PM;
 using Android.Runtime;
 using Android.OS;
+using Xamarin.Forms.GoogleMaps.Android;
+using Android;
+using Xamarin.Forms.GoogleMaps;
 
 namespace OnWork.Droid
 {
@@ -16,13 +18,56 @@ namespace OnWork.Droid
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+            Xamarin.FormsGoogleMaps.Init(this, savedInstanceState); //Initialize GoogleMaps
             LoadApplication(new App());
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
+            if (requestCode == RequestLocationId)
+            {
+                if ((grantResults.Length == 1) && (grantResults[0] == (int)Permission.Granted))
+                {
+                    Console.WriteLine();// Permissions granted - display a message.
+                }
+                else
+                {
+                    Console.WriteLine();// Permissions denied - display a message.
+                }
+            }
+
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
+
+        const int RequestLocationId = 0;
+
+        readonly string[] LocationPermissions =
+        {
+        Manifest.Permission.AccessCoarseLocation,
+        Manifest.Permission.AccessFineLocation
+        };
+
+        protected override void OnStart()
+        {
+            base.OnStart();
+
+            if ((int)Build.VERSION.SdkInt >= 23)
+            {
+                if (CheckSelfPermission(Manifest.Permission.AccessFineLocation) != Permission.Granted)
+                {
+                    RequestPermissions(LocationPermissions, RequestLocationId);
+                }
+                else
+                {
+                    // Permissions already granted - display a message.
+                }
+
+                Position position = new Position(36.9628066, -122.0194722);
+                MapSpan mapSpan = new MapSpan(position, 0.01, 0.01);
+                Map map = new Map();
+            }
+        }
+       
     }
 }

@@ -1,6 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps"
+             xmlns:controls="clr-namespace:OnWork.Controls"
              x:Class="OnWork.MainPage">
 
     <!--<StackLayout>
@@ -21,36 +23,79 @@
         </Label>
     </StackLayout>-->
 
-    <AbsoluteLayout>
-        <StackLayout BackgroundColor="Teal" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
-            <StackLayout Margin="0,200,0,0" HorizontalOptions="Center">
-                <Label Text="Xamarin.Forms" HorizontalTextAlignment="Center" TextColor="White"></Label>
-                <Label Text="Bottom NavigationBar" HorizontalTextAlignment="Center" TextColor="White"></Label>
-            </StackLayout>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+
+        <StackLayout Margin="-6,0,0,-6" Grid.Column="0" Grid.Row="0" VerticalOptions="Fill" HorizontalOptions="FillAndExpand" Orientation="Horizontal">
+            <!--<controls:LabeledSwitch x:Name="lstest" Title="My Title" Detail="My Detail"/>-->
+            <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"  ColumnSpacing="0" RowSpacing="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition  Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="btnEmployer" Text="Emloyerrrr"  BackgroundColor="White" BorderColor="Black"  Grid.Row="0" Grid.Column="0" 
+                        Pressed="btnEmployer_Pressed"/>
+                <Button x:Name="btnEmployee" Text="Employeeee" BackgroundColor="White" BorderColor="Black"  Grid.Row="0" Grid.Column="1" 
+                        Pressed="btnEmployee_Pressed"/>
+            </Grid>
+
+        </StackLayout>
+
+        <StackLayout Grid.Column="0" Grid.Row="1" BackgroundColor="Gray" Margin="0,0,0,-10"  AbsoluteLayout.LayoutFlags="All" >
+            <maps:Map x:Name="map" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
+                      MapType="Satellite"
+                      HasZoomEnabled="True"
+                      MyLocationEnabled="True"
+                      MyLocationButtonClicked="map_MyLocationButtonClicked"></maps:Map>
         </StackLayout>
         
-        <StackLayout AbsoluteLayout.LayoutBounds=".20,1,1,.1" AbsoluteLayout.LayoutFlags="All" BackgroundColor="White" HorizontalOptions="FillAndExpand" Orientation="Horizontal">
+        <StackLayout Grid.Column="0" Grid.Row="2" BackgroundColor="White" HorizontalOptions="FillAndExpand" Orientation="Horizontal">
             <StackLayout Style="{StaticResource ButtonNavigationBarStackLayoutStyle}" x:Name="stckHome">
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="Profile_OnTapped"/>
+                </StackLayout.GestureRecognizers>
                 <Image Margin="0,10,0,10" x:Name="imgHome" Style="{StaticResource ButtonNavigationBarImageStyle}" />
-                <Label Text="Home" Style="{StaticResource ButtonNavigationBarLabelStyle}"></Label>
+                <Label Text="Profile" Style="{StaticResource ButtonNavigationBarLabelStyle}"></Label>
             </StackLayout>
             <StackLayout Style="{StaticResource ButtonNavigationBarStackLayoutStyle}" x:Name="stckAlarm">
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="Tasks_OnTapped"/>
+                </StackLayout.GestureRecognizers>
                 <Image Margin="0,10,0,10" x:Name="imgAlarm" Style="{StaticResource ButtonNavigationBarImageStyle}" />
-                <Label Text="Alarm" Style="{StaticResource ButtonNavigationBarLabelStyle}"></Label>
+                <Label Text="Tasks" Style="{StaticResource ButtonNavigationBarLabelStyle}"></Label>
             </StackLayout>
             <StackLayout Style="{StaticResource ButtonNavigationBarStackLayoutStyle}" x:Name="stckCamera">
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="Home_OnTapped"/>
+                </StackLayout.GestureRecognizers>
                 <Image Margin="0,10,0,10" x:Name="imgCamera" Style="{StaticResource ButtonNavigationBarImageStyle}" />
-                <Label Text="Camera" Style="{StaticResource ButtonNavigationBarLabelStyle}"></Label>
+                <Label Text="Home" Style="{StaticResource ButtonNavigationBarLabelStyle}"></Label>
             </StackLayout>
             <StackLayout Style="{StaticResource ButtonNavigationBarStackLayoutStyle}" x:Name="stckSettings">
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="Settings_OnTapped"/>
+                </StackLayout.GestureRecognizers>
                 <Image Margin="0,10,0,10" x:Name="imgSettings" Style="{StaticResource ButtonNavigationBarImageStyle}" />
                 <Label Text="Settings" Style="{StaticResource ButtonNavigationBarLabelStyle}"></Label>
             </StackLayout>
             <StackLayout Style="{StaticResource ButtonNavigationBarStackLayoutStyle}" x:Name="stckLogout">
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer /> <!--Tapped="OnTapped"-->
+                </StackLayout.GestureRecognizers>
                 <Image Margin="0,10,0,10" x:Name="imgLogout" Style="{StaticResource ButtonNavigationBarImageStyle}" />
                 <Label Text="Logout" Style="{StaticResource ButtonNavigationBarLabelStyle}"></Label>
             </StackLayout>
         </StackLayout>
-    </AbsoluteLayout>
-
+        
+    </Grid>
 </ContentPage>
