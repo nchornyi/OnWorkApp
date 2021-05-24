@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OnWork.Pages.Login" 
+             BackgroundColor="{StaticResource BGLight}">
+    <ContentPage.Content>
+        <StackLayout VerticalOptions="Center" Margin="30">
+            <ActivityIndicator x:Name="activityIndicator" IsRunning="{Binding IsBusy}" VerticalOptions="Center" HorizontalOptions="Center" />
+            <Label>Email</Label>
+            <Entry x:Name="ELogin"></Entry>
+            <Label>Password</Label>
+            <Entry x:Name="EPassword" IsPassword="True"></Entry>
+            <Button x:Name="btnLogin" Text="Login" HeightRequest="55" Clicked="btnLogin_Clicked"
+                    BackgroundColor="{StaticResource BGDark}"/>
+            <StackLayout Orientation="Horizontal" Margin="0,15,0,0" >
+                <BoxView Margin="0,0,25,0" WidthRequest="160" HeightRequest="1" BackgroundColor="Gray"></BoxView>
+                <BoxView WidthRequest="160" HeightRequest="1" BackgroundColor="Gray"></BoxView>
+            </StackLayout>
+            <Label Margin="0,-16,0,0"  HorizontalOptions="Center" >Or</Label>
+            <Button x:Name="btnRegistration" Text="Registration" HeightRequest="55" Clicked="btnRegister_Clicked" 
+                    BackgroundColor="{StaticResource BGDark}"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

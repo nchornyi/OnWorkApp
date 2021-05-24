@@ -5,10 +5,26 @@
     <Application.Resources>
         <!-- Application resource dictionary -->
         <ResourceDictionary>
+         
+            <!-- Colors -->
+            <Color x:Key="BGDark">#5c5470</Color>
+            <Color x:Key="BGLight">#dbd8e3</Color>
+
+            <Style x:Key="LabelTaskStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="25" />
+                <Setter Property="TextColor" Value="Black" />
+            </Style>
+            <Style x:Key="UserTypeSelectorStyle" TargetType="Button">
+                <Setter Property="Background" Value="{StaticResource BGLight}"></Setter>
+                <Setter Property="BorderColor" Value="Black"></Setter>
+                
+            </Style>
+
             <!--Button NavigationBar StackLayout Style-->
             <Style x:Key="ButtonNavigationBarStackLayoutStyle" TargetType="Grid">
                 <Setter Property="VerticalOptions" Value="FillAndExpand" />
                 <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="Background" Value="{StaticResource BGLight}"></Setter>
             </Style>
             <!--Button NavigationBar Label Style-->
             <Style x:Key="ButtonNavigationBarLabelStyle" TargetType="Label">

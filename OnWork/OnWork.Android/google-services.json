@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1075509736660",
+    "project_id": "onwork-f10bb",
+    "storage_bucket": "onwork-f10bb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1075509736660:android:bb358ed7246a89396f3741",
+        "android_client_info": {
+          "package_name": "com.companyname.onwork"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1075509736660-p4elj4rgb5cejspbhvtjfo743lu3hksd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2wmEJVose41Ec8If701iY8r7aASs0Fq0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1075509736660-p4elj4rgb5cejspbhvtjfo743lu3hksd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -11,24 +11,49 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\clipboard.png" />
     <None Remove="Images\location.png" />
+    <None Remove="Images\logo.png" />
+    <None Remove="Images\logout.png" />
+    <None Remove="Images\request.png" />
+    <None Remove="Images\settings.png" />
     <None Remove="Images\test.png" />
+    <None Remove="Images\user.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Images\clipboard.png" />
     <EmbeddedResource Include="Images\location.png" />
+    <EmbeddedResource Include="Images\logout.png" />
+    <EmbeddedResource Include="Images\OnWorkLogo.png" />
+    <EmbeddedResource Include="Images\request.png" />
+    <EmbeddedResource Include="Images\settings.png" />
     <EmbeddedResource Include="Images\test.png" />
+    <EmbeddedResource Include="Images\user.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="FirebaseDatabase.net" Version="4.0.6" />
+    <PackageReference Include="Rg.Plugins.Popup" Version="2.0.0.11" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />
 	  <PackageReference Include="Xamarin.Essentials" Version="1.6.1" />
 	  <PackageReference Include="Xamarin.Forms.GoogleMaps" Version="3.3.0" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Images\NavigationMenu\" />
+    <Reference Include="Mono.Android">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\ReferenceAssemblies\Microsoft\Framework\MonoAndroid\v11.0\Mono.Android.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Pages\Popup\PopupPageTask.xaml.cs">
+      <DependentUpon>PopupPageTask.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Pages\Registration.xaml.cs">
+      <DependentUpon>Registration.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Pages\PageTasks.xaml.cs">
       <DependentUpon>PageTasks.xaml</DependentUpon>
     </Compile>
@@ -37,7 +62,13 @@
     <EmbeddedResource Update="Controls\LabeledSwitch.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Pages\Login.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Pages\PageTasks.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Pages\Popup\PopupPageAddTask.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

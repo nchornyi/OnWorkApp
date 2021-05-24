@@ -1,65 +1,63 @@
-﻿using System.Windows.Input;
+﻿using OnWork.Models;
+using System;
+using System.Windows.Input;
 using Xamarin.Forms;
-
+using Xamarin.Forms.GoogleMaps;
 namespace OnWork
 {
     public partial class MainPage : ContentPage
     {
 
         private Color NavBackColor = Color.LightSlateGray;
+        private Color BGDark;
+        private Color BGLight;
+     
+       
         public MainPage()
         {
             InitializeComponent();
             NavigationPage.SetHasNavigationBar(this, false);
-
+            LoadResources();
             btnEmployer_Pressed(this, null);
             #region footer
-            imgHome.Source = ImageSource.FromResource("OnWork.Images.test.png");
-            imgAlarm.Source = ImageSource.FromResource("XamarinForms_BottomNBar.alarm.png");
-            imgCamera.Source = ImageSource.FromResource("XamarinForms_BottomNBar.camera.png");
-            imgSettings.Source = ImageSource.FromResource("XamarinForms_BottomNBar.settings.png");
-            imgLogout.Source = ImageSource.FromResource("XamarinForms_BottomNBar.logout.png");
+            imgProfile.Source = ImageSource.FromResource("OnWork.Images.user.png");
+            imgTasks.Source = ImageSource.FromResource("OnWork.Images.clipboard.png");
+            imgRequests.Source = ImageSource.FromResource("OnWork.Images.request.png");
+            imgSettings.Source = ImageSource.FromResource("OnWork.Images.settings.png");
+            imgLogout.Source = ImageSource.FromResource("OnWork.Images.logout.png");
             //Tap Gesture Recognizer  
             var homeTap = new TapGestureRecognizer();
             homeTap.Tapped += (sender, e) =>
             {
-                DefaultBackground();
                 stckHome.BackgroundColor = NavBackColor;
             };
             stckHome.GestureRecognizers.Add(homeTap);
             var alarmTap = new TapGestureRecognizer();
             alarmTap.Tapped += (sender, e) =>
             {
-                DefaultBackground();
                 stckAlarm.BackgroundColor = NavBackColor;
             };
             stckAlarm.GestureRecognizers.Add(alarmTap);
             var cameraTap = new TapGestureRecognizer();
             cameraTap.Tapped += (sender, e) =>
             {
-                DefaultBackground();
                 stckCamera.BackgroundColor = NavBackColor;
             };
             stckCamera.GestureRecognizers.Add(cameraTap);
             var settingsTap = new TapGestureRecognizer();
             settingsTap.Tapped += (sender, e) =>
             {
-                DefaultBackground();
                 stckSettings.BackgroundColor = NavBackColor;
             };
             stckSettings.GestureRecognizers.Add(settingsTap);
             var logoutTap = new TapGestureRecognizer();
             logoutTap.Tapped += (sender, e) =>
             {
-                DefaultBackground();
                 stckLogout.BackgroundColor = NavBackColor;
             };
             stckLogout.GestureRecognizers.Add(logoutTap);
             #endregion
         }
-
-
-
 
         public void DefaultBackground()
         {
@@ -69,14 +67,25 @@ namespace OnWork
             stckSettings.BackgroundColor = Color.White;
             stckLogout.BackgroundColor = Color.White;
         }
+        private void LoadResources()
+        {
+            try
+            {
+                BGDark = (Color)Application.Current.Resources["BGDark"];
+                BGLight = (Color)Application.Current.Resources["BGLight"];
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
 
-        private void map_MyLocationButtonClicked(object sender, Xamarin.Forms.GoogleMaps.MyLocationButtonClickedEventArgs e)
+        private void map_MyLocationButtonClicked(object sender, MyLocationButtonClickedEventArgs e)
         {
 
         }
 
 
-        public enum EUserType { Employer, Employee }
         public EUserType UserType;
 
         private void btnEmployee_Pressed(object sender, System.EventArgs e)
@@ -84,8 +93,8 @@ namespace OnWork
             btnEmployee.BorderWidth = 2;
             btnEmployer.BorderWidth = 0;
 
-            btnEmployee.BackgroundColor = Color.Red;
-            btnEmployer.BackgroundColor = Color.White;
+            btnEmployee.BackgroundColor = BGDark;
+            btnEmployer.BackgroundColor = BGLight;
 
             UserType = EUserType.Employee;
 
@@ -96,35 +105,40 @@ namespace OnWork
             btnEmployer.BorderWidth = 2;
             btnEmployee.BorderWidth = 0;
 
-            btnEmployer.BackgroundColor = Color.Red;
-            btnEmployee.BackgroundColor = Color.White;
+            btnEmployer.BackgroundColor = BGDark;//Color.Red;
+            btnEmployee.BackgroundColor = BGLight;
 
             UserType = EUserType.Employer;
         }
 
         #region OnTapped
+        private async void Profile_OnTapped(object sender, System.EventArgs e)
+        {
+            await Navigation.PushAsync(new Pages.PageProfile("Profile - ", UserType));
+        }
 
         private async void Tasks_OnTapped(object sender, System.EventArgs e)
         {
             await Navigation.PushAsync(new Pages.PageTasks("Tasks - ",UserType));
         }
 
-        private void Profile_OnTapped(object sender, System.EventArgs e)
+        private async void Requests_OnTapped(object sender, EventArgs e)
         {
-
+            await Navigation.PushAsync(new Pages.PageRequests("Requests - ", UserType));
         }
 
-        private void Home_OnTapped(object sender, System.EventArgs e)
+        private async void Settings_OnTapped(object sender, System.EventArgs e)
         {
-
-        }
-
-        private void Settings_OnTapped(object sender, System.EventArgs e)
-        {
-
+            await Navigation.PushAsync(new Pages.PageSettings("Settings - ", UserType));
         }
 
         #endregion
 
+        private async void Logout_OnTapped(object sender, System.EventArgs e)
+        {
+            FirebaseHelper.CurrentUser = null;
+            await App.Current.MainPage.Navigation.PopAsync();
+        }
+     
     }
 }
