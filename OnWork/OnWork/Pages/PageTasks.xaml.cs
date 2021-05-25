@@ -14,11 +14,13 @@ namespace OnWork.Pages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PageTasks : ContentPage
     {
+        public event EventHandler<object> CallbackEvent;
         public List<TaskItem> Tasks { get; set; } = new List<TaskItem>();
         private EUserType UserType;
         public PageTasks(string title, EUserType userType)
         {
             InitializeComponent();
+            //NavigationPage.SetHasBackButton(this, false);
             ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.Black;
             UserType = userType;
             Title = title + userType.ToString();
@@ -76,6 +78,11 @@ namespace OnWork.Pages
         private void PopupClosed_CallbackEvent(object sender, object e)
         {
             LoadTasks();
+        }
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            CallbackEvent?.Invoke(this, null);
         }
     }
 }

@@ -19,6 +19,7 @@
     <None Remove="Images\settings.png" />
     <None Remove="Images\test.png" />
     <None Remove="Images\user.png" />
+    <None Remove="Images\workLocation.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,11 +31,13 @@
     <EmbeddedResource Include="Images\settings.png" />
     <EmbeddedResource Include="Images\test.png" />
     <EmbeddedResource Include="Images\user.png" />
+    <EmbeddedResource Include="Images\worklocation.png" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="FirebaseDatabase.net" Version="4.0.6" />
     <PackageReference Include="Rg.Plugins.Popup" Version="2.0.0.11" />
+    <PackageReference Include="Xam.Plugin.Geolocator" Version="4.5.0.6" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />
 	  <PackageReference Include="Xamarin.Essentials" Version="1.6.1" />
 	  <PackageReference Include="Xamarin.Forms.GoogleMaps" Version="3.3.0" />

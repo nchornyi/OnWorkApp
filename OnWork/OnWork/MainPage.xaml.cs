@@ -1,5 +1,9 @@
 ﻿using OnWork.Models;
+using Plugin.Geolocator;
+using Rg.Plugins.Popup.Services;
 using System;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.GoogleMaps;
@@ -11,8 +15,9 @@ namespace OnWork
         private Color NavBackColor = Color.LightSlateGray;
         private Color BGDark;
         private Color BGLight;
-     
-       
+        public EUserType UserType;
+        private Distance distance = Distance.FromMeters(300);
+        [Obsolete]
         public MainPage()
         {
             InitializeComponent();
@@ -57,6 +62,83 @@ namespace OnWork
             };
             stckLogout.GestureRecognizers.Add(logoutTap);
             #endregion
+
+            Task.Run(() => LoadMapOnMyLocation());
+            LoadPins();
+        }
+
+        private async Task LoadMapOnMyLocation()
+        {
+            var locator = CrossGeolocator.Current;
+            locator.DesiredAccuracy = 50;
+
+            var location = await locator.GetPositionAsync(TimeSpan.FromTicks(10000));
+            Position position = new Position(location.Latitude, location.Longitude);
+
+            map.MoveToRegion(MapSpan.FromCenterAndRadius(position, distance));
+        }
+
+        [Obsolete]
+        private Pin CreatePin(Position location, string title, string desc, string taskid)
+        {
+            var pin = new Pin()
+            {
+                Address = desc,
+                IsVisible = true,
+                Label = title,
+                Tag = taskid,
+                Icon = BitmapDescriptorFactory.FromBundle("base"),
+                Position = location,
+                Type = PinType.Place
+            };
+            pin.Clicked += Pin_Clicked;
+
+            return pin;
+        }
+
+        [Obsolete]
+        private void LoadPins()
+        {
+            var Tasks = Task.Run(async () => await FirebaseHelper.GetTasks()).Result;
+
+            foreach (var item in Tasks)
+            {
+                map.Pins.Add(CreatePin(
+                    new Position(item.TaskLocationItem.Location.Latitude,item.TaskLocationItem.Location.Longitude), 
+                    item.Title + " " + item.Price,
+                    item.Desc+ "(Click for additional info)", 
+                    item.id));
+            }
+
+            if(map.Pins.Count != 0)
+                map.MoveToRegion(MapSpan.FromCenterAndRadius(map.Pins.Last().Position, distance));
+        }
+
+        [Obsolete]
+        private void ReloadPins()
+        {
+            map.Pins.Clear();
+            LoadPins();
+        }
+
+        [Obsolete]
+        private async void Pin_Clicked(object sender, EventArgs e)
+        {
+            var taskId = ((Pin)sender).Tag.ToString();
+            var task = await FirebaseHelper.GetTaskItem(taskId);
+
+            if (task != null)
+            {
+                var page = new Pages.Popup.PopupPageTask(task, UserType);
+                page.CallbackEvent += PopupPageTaskClosed_CallbackEvent;
+                await PopupNavigation.PushAsync(page);
+            }
+        }
+
+        [Obsolete]
+        private void PopupPageTaskClosed_CallbackEvent(object sender, object e)
+        {
+            ReloadPins();
         }
 
         public void DefaultBackground()
@@ -86,7 +168,6 @@ namespace OnWork
         }
 
 
-        public EUserType UserType;
 
         private void btnEmployee_Pressed(object sender, System.EventArgs e)
         {
@@ -116,10 +197,12 @@ namespace OnWork
         {
             await Navigation.PushAsync(new Pages.PageProfile("Profile - ", UserType));
         }
-
+        [Obsolete]
         private async void Tasks_OnTapped(object sender, System.EventArgs e)
         {
-            await Navigation.PushAsync(new Pages.PageTasks("Tasks - ",UserType));
+            var page = new Pages.PageTasks("Tasks - ", UserType);
+            page.CallbackEvent += PopupPageTaskClosed_CallbackEvent;
+            await Navigation.PushAsync(page);
         }
 
         private async void Requests_OnTapped(object sender, EventArgs e)

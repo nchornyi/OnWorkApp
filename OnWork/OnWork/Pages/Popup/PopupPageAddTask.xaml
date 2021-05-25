@@ -28,6 +28,24 @@
             <Entry  x:Name="EDescription"></Entry>
             <Label>Location</Label>
             <Entry x:Name="ELocation"></Entry>
+            <ListView
+                x:Name="lvLocations"
+                IsVisible="True"
+                HeightRequest="150"
+                ItemTapped="ItemSelected"
+                SeparatorVisibility="None">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout BackgroundColor="#eee" Orientation="Horizontal">
+                                <Label Text="{Binding Title}" Margin="5"
+                                TextColor="Black" />
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
             <Label>Price</Label>
             <Entry x:Name="EPrice" Keyboard="Numeric"></Entry>
             <Button x:Name="btnAdd" BackgroundColor="LightGreen" Text="Add Task" WidthRequest="300"

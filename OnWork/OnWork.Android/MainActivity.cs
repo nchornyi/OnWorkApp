@@ -14,6 +14,10 @@ namespace OnWork.Droid
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
+            var platformConfig = new PlatformConfig
+            {
+                BitmapDescriptorFactory = new AccessNativeBitmapConfig()
+            };
             Firebase.FirebaseApp.InitializeApp(Application.Context);
 
             base.OnCreate(savedInstanceState);
@@ -21,7 +25,7 @@ namespace OnWork.Droid
             Rg.Plugins.Popup.Popup.Init(this);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
-            Xamarin.FormsGoogleMaps.Init(this, savedInstanceState); //Initialize GoogleMaps
+            Xamarin.FormsGoogleMaps.Init(this, savedInstanceState, platformConfig); //Initialize GoogleMaps
             LoadApplication(new App());
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
@@ -67,7 +71,7 @@ namespace OnWork.Droid
                 }
 
                 Position position = new Position(36.9628066, -122.0194722);
-                MapSpan mapSpan = new MapSpan(position, 0.01, 0.01);
+                MapSpan mapSpan = new MapSpan(position, 0.05, 0.05);
                 Map map = new Map();
             }
         }

@@ -15,7 +15,7 @@
                             <StackLayout BackgroundColor="#eee" Orientation="Horizontal">
                                 
                                 <Label Text="{Binding Title}" Margin="5"
-                                TextColor="#f35e20" />
+                                TextColor="Black" />
                                 <Label Text="{Binding Desc}"
                                 HorizontalOptions="EndAndExpand" VerticalOptions="Center"
                                 TextColor="DarkGoldenrod" />

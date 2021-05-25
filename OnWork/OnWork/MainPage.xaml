@@ -60,8 +60,8 @@
                       MyLocationEnabled="True"
                       MyLocationButtonClicked="map_MyLocationButtonClicked"></maps:Map>
         </StackLayout>
-        
-        <StackLayout Grid.Column="0" Grid.Row="2" BackgroundColor="White" HorizontalOptions="FillAndExpand" Orientation="Horizontal">
+
+        <StackLayout Grid.Column="0" Grid.Row="2" BackgroundColor="{StaticResource BGLight}" HorizontalOptions="FillAndExpand" Orientation="Horizontal">
             <StackLayout Style="{StaticResource ButtonNavigationBarStackLayoutStyle}" x:Name="stckHome">
                 <StackLayout.GestureRecognizers>
                     <TapGestureRecognizer Tapped="Profile_OnTapped"/>

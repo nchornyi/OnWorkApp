@@ -25,17 +25,20 @@ namespace OnWork
 
             }
         }
+        #region TaskItem
+        private static async Task<FirebaseObject<TaskItem>> FBGetTaskItem(string id) => 
+            (await firebase.Child(ETables.Tasks.ToString())
+                           .OnceAsync<TaskItem>())
+                           .FirstOrDefault(x => x.Object.id == id);
+
         public static async Task AddTaskItem(TaskItem task)
         {
             await firebase.Child(ETables.Tasks.ToString()).PostAsync(task);
         }
-        private static async Task<FirebaseObject<TaskItem>> GetTaskItem(string id)
-        {
-            return (await firebase.Child(ETables.Tasks.ToString()).OnceAsync<TaskItem>()).FirstOrDefault(x => x.Object.id == id);
-        }
+        
         public static async Task DeleteTaskItem(TaskItem task)
         {
-            var taskItem = await GetTaskItem(task.id);
+            var taskItem = await FBGetTaskItem(task.id);
             if (taskItem == null) return;
             await firebase.Child(ETables.Tasks.ToString()).Child(taskItem?.Key).DeleteAsync();
         }
@@ -45,6 +48,21 @@ namespace OnWork
                                   .OnceAsync<TaskItem>()).Select(x=>x.Object).ToList();
         }
 
+        public static async Task<TaskItem> GetTaskItem(string taskId)
+        {
+            var taskItem = await FBGetTaskItem(taskId);
+            return taskItem?.Object;
+        }
+
+        public static async Task UpdateTaskItem(TaskItem task)
+        {
+            task.LocationIcon = null;
+            var taskItem = await FBGetTaskItem(task.id);
+            await firebase.Child(ETables.Tasks.ToString()).Child(taskItem?.Key).PutAsync(task);
+        }
+        #endregion
+
+        #region User
         public static async Task AddUser(string username, string password)
         {
             await firebase.Child(ETables.Users.ToString()).PostAsync(
@@ -56,5 +74,12 @@ namespace OnWork
                                   .OnceAsync<User>())
                                   .FirstOrDefault(x=>x.Object.UserName==username)?.Object;
         }
+        public static async Task<User> GetUserById(string id)
+        {
+            return (await firebase.Child(ETables.Users.ToString())
+                                  .OnceAsync<User>())
+                                  .FirstOrDefault(x => x.Object.id == id)?.Object;
+        }
+        #endregion
     }
 }

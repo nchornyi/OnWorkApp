@@ -1,4 +1,5 @@
 ﻿using OnWork.Models;
+using Plugin.Geolocator.Abstractions;
 using Rg.Plugins.Popup.Extensions;
 using System;
 using System.Collections.Generic;
@@ -16,11 +17,80 @@ namespace OnWork.Pages.Popup
     {
         public event EventHandler<object> CallbackEvent;
 
+
+        private List<TaskLocation> LocationList { get; set; }
         public PopupPageAddTask()
         {
             InitializeComponent();
+
+
+            LocationList = new List<TaskLocation>()
+            {
+                new TaskLocation()
+                {
+                    Title = "Карма Кава",
+                    Location = new Position(49.5523761,25.5925439)
+                }
+                /*,
+                new TaskLocation()
+                {
+                    Title = "test1",
+                    LocationCord = "123"
+                },
+                new TaskLocation()
+                {
+                    Title = "test2",
+                    LocationCord = "123"
+                },
+                new TaskLocation()
+                {
+                    Title = "test3",
+                    LocationCord = "123"
+                },*/
+            };
+
+            lvLocations.BindingContext = LocationList;
+            lvLocations.ItemsSource = LocationList;
         }
 
+        private void ItemSelected(object sender, ItemTappedEventArgs e)
+        {
+            ELocation.Text = ((TaskLocation)e.Item).Title;
+            lvLocations.IsVisible = false;
+        }
+
+        private async void btnAdd_Clicked(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(ETitle.Text) &&
+                !string.IsNullOrWhiteSpace(EDescription.Text) &&
+                !string.IsNullOrWhiteSpace(ELocation.Text) &&
+                !string.IsNullOrWhiteSpace(EPrice.Text))
+            {
+                this.IsBusy = true;
+                var item = new TaskItem(DateTime.Now)//true 
+                {
+                    OwnerNickName = FirebaseHelper.CurrentUser.UserName,
+                    Desc = EDescription.Text,
+                    Title = ETitle.Text,
+                    TaskLocationItem = LocationList.FirstOrDefault(x=>x.Title== ELocation.Text),
+                    Price = EPrice.Text
+                };
+                //  MessagingCenter.Send<PopupPageAddTask, string>(this, "msg", "test");
+                await FirebaseHelper.AddTaskItem(item);
+                // Close the last PopupPage int the PopupStack
+
+                this.IsBusy = false;
+                await Navigation.PopPopupAsync();
+
+            }
+            else
+            {
+                //await Navigation.PopPopupAsync();//delete in release!!!
+                await DisplayAlert("Alert", "All fields need to be filled!", "OK");
+            }
+        }
+
+        #region PppupEvents
         protected override void OnAppearing()
         {
             base.OnAppearing();
@@ -93,36 +163,8 @@ namespace OnWork.Pages.Popup
             // Return false if you don't want to close this popup page when a background of the popup page is clicked
             return base.OnBackgroundClicked();
         }
+        #endregion
 
-        private async void btnAdd_Clicked(object sender, EventArgs e)
-        {
-            if (!string.IsNullOrWhiteSpace(ETitle.Text) && 
-                !string.IsNullOrWhiteSpace(EDescription.Text) && 
-                !string.IsNullOrWhiteSpace(ELocation.Text) && 
-                !string.IsNullOrWhiteSpace(EPrice.Text))
-            {
-                this.IsBusy = true;
-                var item = new TaskItem(DateTime.Now)//true 
-                {
-                    OwnerId = FirebaseHelper.CurrentUser.id,
-                    Desc = EDescription.Text,
-                    Title = ETitle.Text,
-                    Location = ELocation.Text, 
-                    Price = EPrice.Text 
-                };
-                //  MessagingCenter.Send<PopupPageAddTask, string>(this, "msg", "test");
-                await FirebaseHelper.AddTaskItem(item);
-                // Close the last PopupPage int the PopupStack
-
-                this.IsBusy = false;
-                await Navigation.PopPopupAsync();
-
-            }
-            else
-            {
-                //await Navigation.PopPopupAsync();//delete in release!!!
-                await DisplayAlert("Alert", "All fields need to be filled!", "OK");
-            }
-        }
+      
     }
 }

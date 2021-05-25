@@ -11,7 +11,7 @@
             <Color x:Key="BGLight">#dbd8e3</Color>
 
             <Style x:Key="LabelTaskStyle" TargetType="Label">
-                <Setter Property="FontSize" Value="25" />
+                <Setter Property="FontSize" Value="20" />
                 <Setter Property="TextColor" Value="Black" />
             </Style>
             <Style x:Key="UserTypeSelectorStyle" TargetType="Button">
@@ -24,7 +24,7 @@
             <Style x:Key="ButtonNavigationBarStackLayoutStyle" TargetType="Grid">
                 <Setter Property="VerticalOptions" Value="FillAndExpand" />
                 <Setter Property="HorizontalOptions" Value="FillAndExpand" />
-                <Setter Property="Background" Value="{StaticResource BGLight}"></Setter>
+                <Setter Property="BackgroundColor" Value="{StaticResource BGLight}"></Setter>
             </Style>
             <!--Button NavigationBar Label Style-->
             <Style x:Key="ButtonNavigationBarLabelStyle" TargetType="Label">
@@ -34,7 +34,7 @@
             </Style>
             <!-- Bottom NavigationBar Image Style-->
             <Style x:Key="ButtonNavigationBarImageStyle" TargetType="Image">
-                <Setter Property="WidthRequest" Value="30" />
+                <Setter Property="WidthRequest" Value="32" />
                 <Setter Property="HeightRequest" Value="30" />
             </Style>
         </ResourceDictionary>

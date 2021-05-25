@@ -1,6 +1,7 @@
 ﻿using OnWork.Models;
 using Rg.Plugins.Popup.Extensions;
 using System;
+using System.Linq;
 using System.Drawing;
 using System.Threading.Tasks;
 using Xamarin.Forms.Xaml;
@@ -12,20 +13,19 @@ namespace OnWork.Pages.Popup
     {
         public event EventHandler<object> CallbackEvent;
 
-        private TaskItem item;
+        public TaskItem item;
         private EUserType UserType;
         public PopupPageTask(TaskItem task, EUserType userType)
         {
             InitializeComponent();
+            UserType = userType;
             item = task;
-            userType = userType;
-
             OpenedTask.BindingContext = item;
-
+            
             switch (userType)
             {
                 case EUserType.Employer:
-                    if (task.id == FirebaseHelper.CurrentUser.id)
+                    if (task.OwnerNickName == FirebaseHelper.CurrentUser.UserName)
                     {
                         btnSendRequest.Text = "Delete task";
                         btnSendRequest.BackgroundColor = Color.Red;
@@ -37,8 +37,17 @@ namespace OnWork.Pages.Popup
                     break;
                 case EUserType.Employee:
 
-                    btnSendRequest.Text = "Send request";
-                    btnSendRequest.BackgroundColor = Color.LightGreen;
+                    var userRequest = task.Requests.FirstOrDefault(x => x.UserNickName == FirebaseHelper.CurrentUser.UserName);
+                    if (userRequest == null)
+                    {
+                        btnSendRequest.Text = "Send request";
+                        btnSendRequest.BackgroundColor = Color.LightGreen;
+                    }
+                    else
+                    {
+                        btnSendRequest.Text = "Revert request";
+                        btnSendRequest.BackgroundColor = Color.Gold;
+                    }
 
                     break;
                 default:
@@ -66,13 +75,23 @@ namespace OnWork.Pages.Popup
                     break;
                 case EUserType.Employee:
 
-                    //
+                    var userRequest = item.Requests.FirstOrDefault(x => x.UserNickName == FirebaseHelper.CurrentUser.UserName);
+                    if (userRequest == null)
+                    {
+                        var request = new TaskRequest() { UserNickName = FirebaseHelper.CurrentUser.UserName, Description = " " };
+                        item.Requests.Add(request);
+                        await FirebaseHelper.UpdateTaskItem(item);
+                    }
+                    else
+                    {
+                        item.Requests.Remove(userRequest);
+                        await FirebaseHelper.UpdateTaskItem(item);
+                    }
 
                     break;
                 default:
                     break;
             }
-            //  await FirebaseHelper.AddTaskItem(item);
             // Close the last PopupPage int the PopupStack
 
             this.IsBusy = false;
