@@ -4,9 +4,46 @@
              x:Class="OnWork.Pages.PageRequests">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <ListView x:Name="RequestsList" SeparatorColor="Black" RefreshControlColor="Black" 
+                      ItemTapped="RequestsList_ItemTapped" >
+                <ListView.Header>
+                    <StackLayout BackgroundColor="#cccccc" Orientation="Horizontal">
+                        <Label WidthRequest="100" Text="UserName" HorizontalOptions="Start"/>
+                        <Label WidthRequest="100" Text="Description" HorizontalOptions="Center"/>
+                        <Label WidthRequest="100" Text="Status" HorizontalOptions="End"/>
+                        <Label WidthRequest="200" Text="RequestDate" HorizontalOptions="End"/>
+                    </StackLayout>
+                </ListView.Header>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ViewCell.View>
+                                <Grid BackgroundColor="#eee">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="100"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="110"/>
+                                        <ColumnDefinition Width="160"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Grid.Row="0" Grid.Column="0" Text="{Binding UserNickName,StringFormat='{0}'}" Style="{StaticResource CellStyle}" />
+                                    <Label Grid.Row="0" Grid.Column="1" Text="{Binding Description}" Style="{StaticResource CellStyle}"  />
+                                    <Label Grid.Row="0" Grid.Column="2" Text="{Binding Status,StringFormat='{0}'}" Style="{StaticResource CellStyle}"  />
+                                    <Label Grid.Row="0" Grid.Column="3" Text="{Binding RequestDate,StringFormat='{0}'}" Style="{StaticResource CellStyle}" />
+                                   
+                                    <!--<Image Grid.Row="0" Grid.Column="3" Source="{Binding LocationIcon}"  WidthRequest="50" HeightRequest="40"
+                                       Margin="2" HorizontalOptions="End" />-->
+                                </Grid>
+                            </ViewCell.View>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Button x:Name="btnRequest" Margin="0,0,30,30" HeightRequest="90" WidthRequest="90" HorizontalOptions="End" Text="+" CornerRadius="50"
+                BackgroundColor="{StaticResource BGDark}" Font="45" BorderWidth="1.5" BorderColor="Black"
+                Clicked="btnRequest_Clicked"></Button>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -4,24 +4,40 @@
              x:Class="OnWork.Pages.PageTasks"
              BackgroundColor="{StaticResource BGLight}">
     <ContentPage.Resources>
-        
+       
     </ContentPage.Resources>
     <StackLayout>
         <ListView x:Name="TasksList" SeparatorColor="Black" RefreshControlColor="Black" 
                   ItemTapped="TasksList_ItemTapped" >
+            <ListView.Header>
+                <StackLayout BackgroundColor="#cccccc" Orientation="Horizontal">
+                    <Label WidthRequest="100" Text="Title" HorizontalOptions="Start"/>
+                    <Label WidthRequest="200" Text="Desc" HorizontalOptions="Center"/>
+                    <Label WidthRequest="50" Text="Price" HorizontalOptions="End"/>
+                </StackLayout>
+            </ListView.Header>
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                            <StackLayout BackgroundColor="#eee" Orientation="Horizontal">
-                                
-                                <Label Text="{Binding Title}" Margin="5"
-                                TextColor="Black" />
-                                <Label Text="{Binding Desc}"
-                                HorizontalOptions="EndAndExpand" VerticalOptions="Center"
-                                TextColor="DarkGoldenrod" />
-                                <Image Source="{Binding LocationIcon}"  WidthRequest="50" HeightRequest="40"
-                                       Margin="2" HorizontalOptions="Center" VerticalOptions="Center" />
-                            </StackLayout>
+                        <ViewCell.View>
+                            <Grid BackgroundColor="#eee">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="50"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Row="0" Grid.Column="0" Text="{Binding Title}" Style="{StaticResource CellStyle}" />
+                                <Label Grid.Row="0" Grid.Column="1" Text="{Binding Desc}" Style="{StaticResource CellStyle}"  />
+                                <Label Grid.Row="0" Grid.Column="2" Text="{Binding Price}" Style="{StaticResource CellStyle}"
+                                           TextColor="Green"/>
+                                <Image Grid.Row="0" Grid.Column="3" Source="{Binding LocationIcon}"  WidthRequest="50" HeightRequest="40"
+                                       Margin="2" HorizontalOptions="End" />
+                            </Grid>
+                            </ViewCell.View>
                     </ViewCell>
                 </DataTemplate>
              

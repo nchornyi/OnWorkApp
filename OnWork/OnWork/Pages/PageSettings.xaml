@@ -3,10 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="OnWork.Pages.PageSettings">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Coming soon!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <StackLayout Margin="27" Orientation="Horizontal">
+            <Label Text="MapType:" FontSize="25" TextColor="Black"
+                VerticalOptions="Start" 
+                HorizontalOptions="Start" />
+            <Picker x:Name="MapTypePicker" SelectedIndexChanged="MapTypePicker_SelectedIndexChanged" Title="Select map type"  SelectedItem="{Binding SelectedColorName, Mode=TwoWay}"
+                    VerticalOptions="Start" HorizontalOptions="Start"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

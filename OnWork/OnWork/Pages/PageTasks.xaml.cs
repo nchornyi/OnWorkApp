@@ -30,7 +30,7 @@ namespace OnWork.Pages
             }
 
             LoadTasks();
-
+            
             // Padding = new Thickness(0, 0, 0, 50);
             // BackgroundColor = Color.Transparent;
             ////await Navigation.PushAsync(new MainPage());
@@ -62,11 +62,6 @@ namespace OnWork.Pages
             //  ((ListView)sender).SelectedItem = null;
         }
 
-        private void PopupPageTaskClosed_CallbackEvent(object sender, object e)
-        {
-            LoadTasks();
-        }
-
         [Obsolete]
         private async void btnAddItem_Clicked(object sender, EventArgs e)
         {
@@ -77,12 +72,26 @@ namespace OnWork.Pages
 
         private void PopupClosed_CallbackEvent(object sender, object e)
         {
-            LoadTasks();
+            if(e != null)
+            {
+                var task = (TaskItem)e;
+                Tasks.Add(task);
+                TasksList.ItemsSource = Tasks;
+                //LoadTasks();
+            }
         }
+
+        private void PopupPageTaskClosed_CallbackEvent(object sender, object e)
+        {
+            var refresh = (bool)e;
+            if(refresh)
+                LoadTasks();
+        }
+
         protected override void OnDisappearing()
         {
             base.OnDisappearing();
-            CallbackEvent?.Invoke(this, null);
+            CallbackEvent?.Invoke(this, true);
         }
     }
 }

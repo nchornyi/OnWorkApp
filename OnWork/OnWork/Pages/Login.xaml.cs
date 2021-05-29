@@ -20,8 +20,8 @@ namespace OnWork.Pages
             this.BindingContext = this;
             //this.BackgroundImageSource = "Images.location.png";
 
-            ELogin.Text = "1"; EPassword.Text = "2";
-            btnLogin_Clicked(this,null);
+            ELogin.Text = "Nazar"; EPassword.Text = "123";
+            //btnLogin_Clicked(this,null);
         }
 
         private async void btnLogin_Clicked(object sender, EventArgs e)

@@ -5,7 +5,12 @@
     <Application.Resources>
         <!-- Application resource dictionary -->
         <ResourceDictionary>
-         
+            <Style x:Key="CellStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="Black"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="TextColor" Value="Black"/>
+                <Setter Property="Margin" Value="10,0,10,0"/>
+            </Style>
             <!-- Colors -->
             <Color x:Key="BGDark">#5c5470</Color>
             <Color x:Key="BGLight">#dbd8e3</Color>

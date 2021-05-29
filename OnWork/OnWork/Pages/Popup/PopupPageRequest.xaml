@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+             xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+             x:Class="OnWork.Pages.Popup.PopupPageRequest">
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation 
+            PositionIn="Center"
+            PositionOut="Center"
+            ScaleIn="1.2"
+            ScaleOut="0.8"
+            DurationIn="400"
+            DurationOut="300"
+            EasingIn="SinOut"
+            EasingOut="SinIn"
+            HasBackgroundAnimation="True"/>
+    </pages:PopupPage.Animation>
+    <Frame CornerRadius="15" BackgroundColor="White" VerticalOptions="Center" 
+                     HorizontalOptions="Center" 
+                     Padding="20, 20, 20, 20">
+        <StackLayout x:Name="OpenedRequest">
+            <Label x:Name="lblUser" Text="{Binding UserNickName,StringFormat='User: {0}'}" Style="{StaticResource LabelTaskStyle}" HorizontalOptions="Center"/>
+            <Label x:Name="lblLocation" Text="{Binding Description,StringFormat='Desc: {0}'}" Style="{StaticResource LabelTaskStyle}"/>
+            <Label x:Name="lblRequestDate" Text="{Binding RequestDate,StringFormat='RequestDate: {0}'}" Style="{StaticResource LabelTaskStyle}"/>
+            <Label x:Name="lblStatus" Text="{Binding Status,StringFormat='Status: {0}'}" Style="{StaticResource LabelTaskStyle}"/>
+            <Button x:Name="btnRevertRequest" BackgroundColor="LightGreen" Margin="0,10,0,0" Text="Revert request" WidthRequest="300"
+                    Clicked="btnSendRequest_Clicked"></Button>
+            <Button x:Name="btnApprove" BackgroundColor="LightGreen" Margin="0,10,0,0" Text="Approve" WidthRequest="300"
+                    Clicked="btnApproveRequest_Clicked"></Button>
+            <Button x:Name="btnDecline" BackgroundColor="Red" Margin="0,10,0,0" Text="Decline" WidthRequest="300"
+                    Clicked="btnDeclineRequest_Clicked"></Button>
+        </StackLayout>
+    </Frame>
+</pages:PopupPage>

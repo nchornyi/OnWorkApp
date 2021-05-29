@@ -23,30 +23,33 @@ namespace OnWork.Pages.Popup
         {
             InitializeComponent();
 
-
             LocationList = new List<TaskLocation>()
             {
                 new TaskLocation()
                 {
                     Title = "Карма Кава",
                     Location = new Position(49.5523761,25.5925439)
+                },
+                new TaskLocation()
+                {
+                    Title = "Мамонт",
+                    Location = new Position(49.5491325,25.5934022)
+                },
+                new TaskLocation()
+                {
+                    Title = "ЖД",
+                    Location = new Position(49.5516383,25.5964921)
+                },
+                new TaskLocation()
+                {
+                    Title = "ФКІТ",
+                    Location = new Position(49.5607243,25.5937135)
+                },
+                new TaskLocation()
+                {
+                    Title = "Гімназія",
+                    Location = new Position(49.5526858,25.5990243)
                 }
-                /*,
-                new TaskLocation()
-                {
-                    Title = "test1",
-                    LocationCord = "123"
-                },
-                new TaskLocation()
-                {
-                    Title = "test2",
-                    LocationCord = "123"
-                },
-                new TaskLocation()
-                {
-                    Title = "test3",
-                    LocationCord = "123"
-                },*/
             };
 
             lvLocations.BindingContext = LocationList;
@@ -58,7 +61,7 @@ namespace OnWork.Pages.Popup
             ELocation.Text = ((TaskLocation)e.Item).Title;
             lvLocations.IsVisible = false;
         }
-
+        private TaskItem NewTask = null;
         private async void btnAdd_Clicked(object sender, EventArgs e)
         {
             if (!string.IsNullOrWhiteSpace(ETitle.Text) &&
@@ -75,10 +78,18 @@ namespace OnWork.Pages.Popup
                     TaskLocationItem = LocationList.FirstOrDefault(x=>x.Title== ELocation.Text),
                     Price = EPrice.Text
                 };
+
+                if(item.TaskLocationItem == null)
+                {
+                    NewTask = null;
+                    await Navigation.PopPopupAsync();
+                    return;
+                }
+
                 //  MessagingCenter.Send<PopupPageAddTask, string>(this, "msg", "test");
                 await FirebaseHelper.AddTaskItem(item);
                 // Close the last PopupPage int the PopupStack
-
+                NewTask = item;
                 this.IsBusy = false;
                 await Navigation.PopPopupAsync();
 
@@ -98,7 +109,7 @@ namespace OnWork.Pages.Popup
 
         protected override void OnDisappearing()
         {
-            CallbackEvent?.Invoke(this, null);
+            CallbackEvent?.Invoke(this, NewTask);
             base.OnDisappearing();
         }
 

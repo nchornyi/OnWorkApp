@@ -9,46 +9,34 @@ using Xamarin.Forms.Xaml;
 namespace OnWork.Pages.Popup
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class PopupPageTask : Rg.Plugins.Popup.Pages.PopupPage
+    public partial class PopupPageRequest : Rg.Plugins.Popup.Pages.PopupPage
     {
         public event EventHandler<object> CallbackEvent;
 
-        public TaskItem item;
+        public TaskRequest item;
         private EUserType UserType;
         private bool SomethingChanged = false;
-        public PopupPageTask(TaskItem task, EUserType userType)
+        public PopupPageRequest(TaskRequest request, EUserType userType)
         {
             InitializeComponent();
             UserType = userType;
-            item = task;
-            OpenedTask.BindingContext = item;
+            item = request;
+            OpenedRequest.BindingContext = item;
             
             switch (userType)
             {
                 case EUserType.Employer:
-                    if (task.OwnerNickName == FirebaseHelper.CurrentUser.UserName)
-                    {
-                        btnSendRequest.Text = "Delete task";
-                        btnSendRequest.BackgroundColor = Color.Red;
-                    }
-                    else
-                    {
-                        btnSendRequest.IsVisible = false;
-                    }
+
+                    btnRevertRequest.IsVisible = false;
+                    btnApprove.IsVisible = true;
+                    btnDecline.IsVisible = true;
+
                     break;
                 case EUserType.Employee:
 
-                    var userRequest = task.Requests.FirstOrDefault(x => x.UserNickName == FirebaseHelper.CurrentUser.UserName);
-                    if (userRequest == null)
-                    {
-                        btnSendRequest.Text = "Send request";
-                        btnSendRequest.BackgroundColor = Color.LightGreen;
-                    }
-                    else
-                    {
-                        btnSendRequest.Text = "Revert request";
-                        btnSendRequest.BackgroundColor = Color.Gold;
-                    }
+                    btnRevertRequest.IsVisible = true;
+                    btnApprove.IsVisible = false;
+                    btnDecline.IsVisible = false;
 
                     break;
                 default:
@@ -63,10 +51,11 @@ namespace OnWork.Pages.Popup
             {
                 case EUserType.Employer:
 
+
                     var answer = true;//await DisplayAlert("Warning", "Do you really want to delete task?", "Yes", "No");
                     if (answer)
                     {
-                        await FirebaseHelper.DeleteTaskItem(item);
+                    //    await FirebaseHelper.DeleteTaskItem(item);
                     }
                     else
                     {
@@ -75,18 +64,18 @@ namespace OnWork.Pages.Popup
                     break;
                 case EUserType.Employee:
 
-                    var userRequest = item.Requests.FirstOrDefault(x => x.UserNickName == FirebaseHelper.CurrentUser.UserName);
-                    if (userRequest == null)
-                    {
-                        var request = new TaskRequest() { UserNickName = FirebaseHelper.CurrentUser.UserName, Description = " " };
-                        item.Requests.Add(request);
-                        await FirebaseHelper.UpdateTaskItemAsync(item);
-                    }
-                    else
-                    {
-                        item.Requests.Remove(userRequest);
-                        await FirebaseHelper.UpdateTaskItemAsync(item);
-                    }
+                    //var userRequest = item.Requests.FirstOrDefault(x => x.UserNickName == FirebaseHelper.CurrentUser.UserName);
+                    //if (userRequest == null)
+                    //{
+                    //    var request = new TaskRequest() { UserNickName = FirebaseHelper.CurrentUser.UserName, Description = " " };
+                    //    item.Requests.Add(request);
+                    //    await FirebaseHelper.UpdateTaskItemAsync(item);
+                    //}
+                    //else
+                    //{
+                    //    item.Requests.Remove(userRequest);
+                    //    await FirebaseHelper.UpdateTaskItemAsync(item);
+                    //}
 
                     break;
                 default:
@@ -96,6 +85,16 @@ namespace OnWork.Pages.Popup
             SomethingChanged = true;
             this.IsBusy = false;
             await Navigation.PopPopupAsync();
+        }
+
+        private void btnApproveRequest_Clicked(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnDeclineRequest_Clicked(object sender, EventArgs e)
+        {
+
         }
 
         #region PopupEvents

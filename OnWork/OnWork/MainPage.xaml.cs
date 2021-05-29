@@ -16,7 +16,7 @@ namespace OnWork
         private Color BGDark;
         private Color BGLight;
         public EUserType UserType;
-        private Distance distance = Distance.FromMeters(300);
+        private Distance distance = Distance.FromMeters(400);
         [Obsolete]
         public MainPage()
         {
@@ -24,7 +24,11 @@ namespace OnWork
             NavigationPage.SetHasNavigationBar(this, false);
             LoadResources();
             btnEmployer_Pressed(this, null);
+
+            LoadSettings();
+
             #region footer
+            DefaultBackground();
             imgProfile.Source = ImageSource.FromResource("OnWork.Images.user.png");
             imgTasks.Source = ImageSource.FromResource("OnWork.Images.clipboard.png");
             imgRequests.Source = ImageSource.FromResource("OnWork.Images.request.png");
@@ -65,6 +69,15 @@ namespace OnWork
 
             Task.Run(() => LoadMapOnMyLocation());
             LoadPins();
+
+
+        }
+
+        private void LoadSettings()
+        {
+            var settings = FirebaseHelper.CurrentUser?.Settings;
+            Enum.TryParse(settings.MapType, out MapType type);
+            map.MapType =  settings.MapType == null ? MapType.Satellite : type;
         }
 
         private async Task LoadMapOnMyLocation()
@@ -138,16 +151,17 @@ namespace OnWork
         [Obsolete]
         private void PopupPageTaskClosed_CallbackEvent(object sender, object e)
         {
+            DefaultBackground();
             ReloadPins();
         }
 
         public void DefaultBackground()
         {
-            stckHome.BackgroundColor = Color.White;
-            stckAlarm.BackgroundColor = Color.White;
-            stckCamera.BackgroundColor = Color.White;
-            stckSettings.BackgroundColor = Color.White;
-            stckLogout.BackgroundColor = Color.White;
+            stckHome.BackgroundColor = BGLight;
+            stckAlarm.BackgroundColor = BGLight;
+            stckCamera.BackgroundColor = BGLight;
+            stckLogout.BackgroundColor = BGLight;
+            stckSettings.BackgroundColor = BGLight;
         }
         private void LoadResources()
         {
@@ -195,7 +209,9 @@ namespace OnWork
         #region OnTapped
         private async void Profile_OnTapped(object sender, System.EventArgs e)
         {
-            await Navigation.PushAsync(new Pages.PageProfile("Profile - ", UserType));
+            var page = new Pages.PageProfile("Profile - ", UserType);
+            page.CallbackEvent += PopupPageTaskClosed_CallbackEvent;
+            await Navigation.PushAsync(page);
         }
         [Obsolete]
         private async void Tasks_OnTapped(object sender, System.EventArgs e)
@@ -207,12 +223,22 @@ namespace OnWork
 
         private async void Requests_OnTapped(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new Pages.PageRequests("Requests - ", UserType));
+            var page = new Pages.PageRequests("Requests - ", UserType);
+            page.CallbackEvent += PopupPageTaskClosed_CallbackEvent;
+            await Navigation.PushAsync(page);
         }
 
         private async void Settings_OnTapped(object sender, System.EventArgs e)
         {
-            await Navigation.PushAsync(new Pages.PageSettings("Settings - ", UserType));
+            var page = new Pages.PageSettings("Settings - ", UserType);
+            page.CallbackEvent += PopupPageSettingsClosed_CallbackEvent;
+            await Navigation.PushAsync(page);
+        }
+
+        private async void PopupPageSettingsClosed_CallbackEvent(object sender, object e)
+        {
+            FirebaseHelper.CurrentUser = await FirebaseHelper.GetUser(FirebaseHelper.CurrentUser.UserName);
+            LoadSettings();
         }
 
         #endregion

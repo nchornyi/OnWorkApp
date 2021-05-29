@@ -18,7 +18,7 @@
     </pages:PopupPage.Animation>
     <Frame CornerRadius="15" BackgroundColor="White" VerticalOptions="Center" 
                      HorizontalOptions="Center" 
-                     Padding="20, 20, 20, 20">
+                     Margin="40,10">
         <StackLayout>
             <Label HorizontalOptions="Center">Create Task</Label>
             <!--<ActivityIndicator x:Name="activityIndicator" IsRunning="{Binding IsBusy}" VerticalOptions="Center" HorizontalOptions="Center" />-->
@@ -31,7 +31,7 @@
             <ListView
                 x:Name="lvLocations"
                 IsVisible="True"
-                HeightRequest="150"
+                HeightRequest="110"
                 ItemTapped="ItemSelected"
                 SeparatorVisibility="None">
                 <ListView.ItemTemplate>

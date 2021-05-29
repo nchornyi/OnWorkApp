@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+    <UserSecretsId>08cb8eff-3956-4aef-9be7-f7123cd5bcb1</UserSecretsId>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -51,6 +52,9 @@
     <Resource Include="Images\logo.png" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Pages\Popup\PopupPageRequest.xaml.cs">
+      <DependentUpon>PopupPageRequest.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Pages\Popup\PopupPageTask.xaml.cs">
       <DependentUpon>PopupPageTask.xaml</DependentUpon>
     </Compile>
