@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="OnWork.Controls.CustomSwich" Collapsed="true">
-    <Position X="5.25" Y="0.5" Width="1.5" />
+    <Position X="8.5" Y="1.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Controls\CustomSwich.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="OnWork.Controls.LabeledSwitch" Collapsed="true">
-    <Position X="10.5" Y="0.5" Width="1.5" />
+    <Position X="7.25" Y="3" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAgCAAAEAAAACAAAAgAAAAAAAAAAIAAAAACAA=</HashCode>
       <FileName>Controls\LabeledSwitch.xaml.cs</FileName>
@@ -29,7 +29,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="OnWork.MainPage" Collapsed="true">
-    <Position X="3.5" Y="1.5" Width="1.5" />
+    <Position X="6.25" Y="4.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>QAAACAACUABAAJwAAAAAAggAAMAGSAEAAAAAiAhAAAA=</HashCode>
       <FileName>MainPage.xaml.cs</FileName>
@@ -63,8 +63,8 @@
       <FileName>Models\GoogleMapsModels.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="OnWork.Models.PlacesLocationPredictions" Collapsed="true">
-    <Position X="1.75" Y="2.5" Width="1.5" />
+  <Class Name="OnWork.Models.PlacesLocationPredictions">
+    <Position X="7.5" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAA=</HashCode>
       <FileName>Models\GoogleMapsModels.cs</FileName>
@@ -78,20 +78,20 @@
     </TypeIdentifier>
   </Class>
   <Class Name="OnWork.Models.TaskItem" Collapsed="true">
-    <Position X="5.25" Y="3.5" Width="1.5" />
+    <Position X="5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAQAAAECAAAAAAAAABAAAAAAAAAAEQBAAggA=</HashCode>
       <FileName>Models\TaskItem.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="OnWork.Models.TaskLocation" Collapsed="true">
-    <Position X="7" Y="3.5" Width="1.5" />
+  <Class Name="OnWork.Models.TaskLocation">
+    <Position X="7" Y="5.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAEAAAAIAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\TaskLocation.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="OnWork.Models.TaskRequest" Collapsed="true">
+  <Class Name="OnWork.Models.TaskRequest">
     <Position X="8.75" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAEAAAgAAAAAAAAAAAAAAAABAAAAAAAAAAAQgA=</HashCode>
@@ -105,78 +105,78 @@
       <FileName>Models\User.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="OnWork.Models.UserInfo" Collapsed="true">
+  <Class Name="OnWork.Models.UserInfo">
     <Position X="1.75" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAACAAAAAAgAAAAAAAAAAAAAAAAAAEAAAAACAAAAAA=</HashCode>
       <FileName>Models\UserInfo.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="OnWork.Models.UserSettings" Collapsed="true">
-    <Position X="3.5" Y="4.5" Width="1.5" />
+  <Class Name="OnWork.Models.UserSettings">
+    <Position X="3.5" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\UserSettings.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="OnWork.Pages.Popup.PopupPageAddTask" Collapsed="true">
-    <Position X="7" Y="2.5" Width="1.5" />
+    <Position X="7" Y="5.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAgZAAAACAgABAAgCQEAAAAAAAAAAAAQEAAAEIAAAIA=</HashCode>
       <FileName>Pages\Popup\PopupPageAddTask.xaml.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="OnWork.Pages.Popup.PopupPageRequest" Collapsed="true">
-    <Position X="8.75" Y="2.5" Width="1.5" />
+    <Position X="7.25" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAgZAIAACAgAAAAAAQUEAAAAAAAACAAQEAAAEIAAQII=</HashCode>
       <FileName>Pages\Popup\PopupPageRequest.xaml.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="OnWork.Pages.Popup.PopupPageTask" Collapsed="true">
-    <Position X="10.5" Y="2.5" Width="1.5" />
+    <Position X="7.25" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAgZAAAACAgAAAAAAQUEAAAAAAAACAAQEAAAEIAAQIA=</HashCode>
       <FileName>Pages\Popup\PopupPageTask.xaml.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="OnWork.Pages.Login" Collapsed="true">
-    <Position X="1.75" Y="1.5" Width="1.5" />
+  <Class Name="OnWork.Pages.Login">
+    <Position X="7" Y="5.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgACAAAAAAAA=</HashCode>
       <FileName>Pages\Login.xaml.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="OnWork.Pages.PageProfile" Collapsed="true">
-    <Position X="5.25" Y="1.5" Width="1.5" />
+    <Position X="6.75" Y="4.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAIAAAACAAAAAAAAAAAAAAAAAAACBACAAAAAAAAAAA=</HashCode>
       <FileName>Pages\PageProfile.xaml.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="OnWork.Pages.PageRequests" Collapsed="true">
-    <Position X="7" Y="1.5" Width="1.5" />
+  <Class Name="OnWork.Pages.PageRequests">
+    <Position X="7" Y="5.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQIAAAACAAAAAAAAAgAAAAAAAAACAAAAAAAgAAAACA=</HashCode>
       <FileName>Pages\PageRequests.xaml.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="OnWork.Pages.PageSettings" Collapsed="true">
-    <Position X="8.75" Y="1.5" Width="1.5" />
+    <Position X="7" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAIAAAACAAAAAAAAAAAAAAAAAAAiAAACAAAAAAAAAA=</HashCode>
       <FileName>Pages\PageSettings.xaml.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="OnWork.Pages.PageTasks" Collapsed="true">
-    <Position X="10.5" Y="1.5" Width="1.5" />
+    <Position X="7" Y="4" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAIAAAgCoAAAAAAAAAAAAAAAACACAAAAAAIgAAAAAA=</HashCode>
       <FileName>Pages\PageTasks.xaml.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="OnWork.Pages.Registration" Collapsed="true">
-    <Position X="3.5" Y="3.5" Width="1.5" />
+  <Class Name="OnWork.Pages.Registration">
+    <Position X="6.5" Y="5.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAA=</HashCode>
       <FileName>Pages\Registration.xaml.cs</FileName>
