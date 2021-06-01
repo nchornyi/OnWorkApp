@@ -70,14 +70,18 @@ namespace OnWork.Pages
             await PopupNavigation.PushAsync(page);
         }
 
-        private void PopupClosed_CallbackEvent(object sender, object e)
+        private async void PopupClosed_CallbackEvent(object sender, object e)
         {
             if(e != null)
             {
+                TasksList.BeginRefresh();
+
                 var task = (TaskItem)e;
                 Tasks.Add(task);
                 TasksList.ItemsSource = Tasks;
                 //LoadTasks();
+
+                TasksList.EndRefresh();
             }
         }
 
