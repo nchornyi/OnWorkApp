@@ -12,7 +12,7 @@
             <ListView.Header>
                 <StackLayout BackgroundColor="#cccccc" Orientation="Horizontal">
                     <Label WidthRequest="100" Text="Title" HorizontalOptions="Start"/>
-                    <Label WidthRequest="200" Text="Desc" HorizontalOptions="Center"/>
+                    <Label WidthRequest="180" Text="Desc" HorizontalOptions="Center"/>
                     <Label WidthRequest="50" Text="Price" HorizontalOptions="End"/>
                 </StackLayout>
             </ListView.Header>
@@ -22,12 +22,12 @@
                         <ViewCell.View>
                             <Grid BackgroundColor="#eee">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="*"></RowDefinition>
+                                    <RowDefinition Height="auto"></RowDefinition>
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="100"/>
                                     <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="50"/>
+                                    <ColumnDefinition Width="70"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
                                 <Label Grid.Row="0" Grid.Column="0" Text="{Binding Title}" Style="{StaticResource CellStyle}" />

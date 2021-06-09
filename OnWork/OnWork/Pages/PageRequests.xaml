@@ -41,9 +41,6 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <Button x:Name="btnRequest" Margin="0,0,30,30" HeightRequest="90" WidthRequest="90" HorizontalOptions="End" Text="+" CornerRadius="50"
-                BackgroundColor="{StaticResource BGDark}" Font="45" BorderWidth="1.5" BorderColor="Black"
-                Clicked="btnRequest_Clicked"></Button>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

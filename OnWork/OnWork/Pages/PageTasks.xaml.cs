@@ -70,7 +70,7 @@ namespace OnWork.Pages
             await PopupNavigation.PushAsync(page);
         }
 
-        private async void PopupClosed_CallbackEvent(object sender, object e)
+        private void PopupClosed_CallbackEvent(object sender, object e)
         {
             if(e != null)
             {
@@ -79,7 +79,7 @@ namespace OnWork.Pages
                 var task = (TaskItem)e;
                 Tasks.Add(task);
                 TasksList.ItemsSource = Tasks;
-                //LoadTasks();
+                LoadTasks();
 
                 TasksList.EndRefresh();
             }

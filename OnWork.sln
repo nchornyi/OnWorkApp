@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnWork.Android", "OnWork\On
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnWork", "OnWork\OnWork\OnWork.csproj", "{A6F1EF32-5F2C-413D-98A1-D1E49A43730B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnWorkTest", "OnWorkTest\OnWorkTest.csproj", "{F6B56138-6EF0-4331-B5DE-91C3AA27759C}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,10 +23,6 @@ Global
 		{A6F1EF32-5F2C-413D-98A1-D1E49A43730B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6F1EF32-5F2C-413D-98A1-D1E49A43730B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6F1EF32-5F2C-413D-98A1-D1E49A43730B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F6B56138-6EF0-4331-B5DE-91C3AA27759C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F6B56138-6EF0-4331-B5DE-91C3AA27759C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F6B56138-6EF0-4331-B5DE-91C3AA27759C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F6B56138-6EF0-4331-B5DE-91C3AA27759C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
