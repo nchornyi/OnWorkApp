@@ -87,9 +87,11 @@ namespace OnWork.Pages.Popup
             await Navigation.PopPopupAsync();
         }
 
-        private void btnApproveRequest_Clicked(object sender, EventArgs e)
+        private async void btnApproveRequest_Clicked(object sender, EventArgs e)
         {
-
+            //SomethingChanged = true;
+            //this.IsBusy = false;
+            //await Navigation.PopPopupAsync();
         }
 
         private void btnDeclineRequest_Clicked(object sender, EventArgs e)

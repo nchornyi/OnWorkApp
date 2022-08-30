@@ -14,8 +14,16 @@
             <!-- Colors -->
             <Color x:Key="BGDark">#5c5470</Color>
             <Color x:Key="BGLight">#dbd8e3</Color>
+            <LinearGradientBrush x:Key="GradientDark"
+                                 StartPoint="0,0"
+                                 EndPoint="1,1">
+                <GradientStop Color="{StaticResource BGDark}"
+                              Offset="0.0" />
+                <GradientStop Color="#cc5470"
+                              Offset="1.0" />
+            </LinearGradientBrush>
 
-            <Style x:Key="LabelTaskStyle" TargetType="Label">
+<Style x:Key="LabelTaskStyle" TargetType="Label">
                 <Setter Property="FontSize" Value="20" />
                 <Setter Property="TextColor" Value="Black" />
             </Style>
@@ -33,7 +41,7 @@
             </Style>
             <!--Button NavigationBar Label Style-->
             <Style x:Key="ButtonNavigationBarLabelStyle" TargetType="Label">
-                <Setter Property="Margin" Value="0,-10,0,0" />
+                <Setter Property="Margin" Value="-15,-10,-15,0" />
                 <Setter Property="HorizontalTextAlignment" Value="Center" />
                 <Setter Property="TextColor" Value="Black" />
             </Style>
@@ -41,6 +49,13 @@
             <Style x:Key="ButtonNavigationBarImageStyle" TargetType="Image">
                 <Setter Property="WidthRequest" Value="32" />
                 <Setter Property="HeightRequest" Value="30" />
+            </Style>
+
+            <Style x:Key="MainSplitterStyle" TargetType="Image">
+                <Setter Property="WidthRequest" Value="0.5" />
+                <Setter Property="Background" Value="Gray" />
+                <Setter Property="VerticalOptions" Value="FillAndExpand" />
+                <Setter Property="HorizontalOptions" Value="End" />
             </Style>
         </ResourceDictionary>
     </Application.Resources>

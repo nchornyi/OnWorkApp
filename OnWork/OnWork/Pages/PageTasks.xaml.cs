@@ -5,8 +5,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using OnWork.Infrastructure;
+using OnWork.Infrastructure.Enums;
 using Xamarin.Forms;
+using Xamarin.Forms.GoogleMaps;
 using Xamarin.Forms.Xaml;
 
 namespace OnWork.Pages
@@ -17,9 +19,16 @@ namespace OnWork.Pages
         public event EventHandler<object> CallbackEvent;
         public List<TaskItem> Tasks { get; set; } = new List<TaskItem>();
         private EUserType UserType;
-        public PageTasks(string title, EUserType userType)
+
+        [Obsolete]
+        public PageTasks(string title, EUserType userType, Pin pin = null)
         {
             InitializeComponent();
+
+            imgFilter.Source = ImageSource.FromResource(Globals.AppliedFilterItem == null 
+                ? "OnWork.Images.filter.png" 
+                : "OnWork.Images.unfilter.png");
+
             //NavigationPage.SetHasBackButton(this, false);
             ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.Black;
             UserType = userType;
@@ -30,9 +39,12 @@ namespace OnWork.Pages
             }
 
             LoadTasks();
-            
-            // Padding = new Thickness(0, 0, 0, 50);
-            // BackgroundColor = Color.Transparent;
+
+            if (pin != null)
+            {
+                btnAddItem_Clicked(pin, null);
+            }
+
             ////await Navigation.PushAsync(new MainPage());
             //await Application.Current.MainPage.Navigation.PopAsync();
             ////await Application.Current.MainPage.Navigation.PopAsync();
@@ -42,7 +54,9 @@ namespace OnWork.Pages
         {
             try
             {
-                TasksList.ItemsSource = Tasks = Task.Run(async () => await FirebaseHelper.GetTasks()).Result;
+                Tasks = Task.Run(async () => await FirebaseHelper.GetTasks()).Result;
+                TasksList.ItemsSource = GetAllOrFilteredTasks();
+
             }
             catch (Exception ex)
             {
@@ -52,9 +66,9 @@ namespace OnWork.Pages
         [Obsolete]
         private async void TasksList_ItemTapped(object sender, ItemTappedEventArgs e)
         {
-            if (e.Item != null)
+            if (e.Item is TaskItem item)
             {
-                var page = new Popup.PopupPageTask((TaskItem)e.Item, UserType);
+                var page = new Popup.PopupPageTask(item, UserType);
                 page.CallbackEvent += PopupPageTaskClosed_CallbackEvent;
                 await PopupNavigation.PushAsync(page);
             }
@@ -65,23 +79,69 @@ namespace OnWork.Pages
         [Obsolete]
         private async void btnAddItem_Clicked(object sender, EventArgs e)
         {
-            var page = new Popup.PopupPageAddTask();
+            var page = sender is Pin pin ? new Popup.PopupPageAddTask(pin) : new Popup.PopupPageAddTask();
             page.CallbackEvent += PopupClosed_CallbackEvent;
             await PopupNavigation.PushAsync(page);
         }
-
-        private void PopupClosed_CallbackEvent(object sender, object e)
+        [Obsolete]
+        private async void Filter_OnTapped(object sender, EventArgs e)
         {
-            if(e != null)
+            if (Globals.AppliedFilterItem != null)
             {
-                TasksList.BeginRefresh();
-
-                var task = (TaskItem)e;
-                Tasks.Add(task);
+                Globals.AppliedFilterItem = null;
+                imgFilter.Source = ImageSource.FromResource("OnWork.Images.filter.png");
                 TasksList.ItemsSource = Tasks;
-                LoadTasks();
+            }
+            else
+            {
+                var page = new Popup.PopupPageFilterTasks();
+                page.CallbackEvent += PopupClosed_CallbackEvent;
+                await PopupNavigation.PushAsync(page);
+            }
+        }
+
+        private List<TaskItem> FilterTasks()
+        {
+            var filter = Globals.AppliedFilterItem;
+            var filteredTasks = Tasks.Where(x => x.TaskType == filter.TaskType
+                                                 && filter.Time.ContainsRange(x.Hours)
+                                                 && filter.Price.ContainsValue(x.Price)).ToList(); //ToDo: Distance
+            return filteredTasks;
+        }
+
+        private List<TaskItem> GetAllOrFilteredTasks() => Globals.AppliedFilterItem == null ? Tasks : FilterTasks();
+
+        private async void PopupClosed_CallbackEvent(object sender, object e)
+        {
+            if (e is FilterItem filter)
+            {
+                imgFilter.Source = ImageSource.FromResource("OnWork.Images.unfilter.png");
+                Globals.AppliedFilterItem = filter;
+                TasksList.BeginRefresh();
+                
+                TasksList.ItemsSource = FilterTasks();
 
                 TasksList.EndRefresh();
+            }
+            else if (e is TaskItem task)
+            {
+                if (task.HasLocation())
+                {
+                    Globals.MapMode = MapMode.View;
+
+                    TasksList.BeginRefresh();
+
+                    Tasks.Add(task);
+                    TasksList.ItemsSource = GetAllOrFilteredTasks();
+                    LoadTasks();
+
+                    TasksList.EndRefresh();
+                }
+                else
+                {
+                    Globals.MapMode = MapMode.Select;
+                    await Application.Current.MainPage.Navigation.PopAsync();
+                }
             }
         }
 

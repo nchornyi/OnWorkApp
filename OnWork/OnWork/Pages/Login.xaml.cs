@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using OnWork.Infrastructure;
+using OnWork.Models;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -20,13 +21,41 @@ namespace OnWork.Pages
             this.BindingContext = this;
             //this.BackgroundImageSource = "Images.location.png";
 
-            ELogin.Text = "Nazar"; EPassword.Text = "123";
-            //btnLogin_Clicked(this,null);
+            if (Globals.Debug)
+            {
+                ELogin.Text = "Nazar"; EPassword.Text = "123";
+                btnLogin_Clicked(this,null);
+            }
         }
 
         private async void btnLogin_Clicked(object sender, EventArgs e)
         {
             if (IsBusy) return;
+
+            if (Globals.Debug && e == null)
+            {
+                FirebaseHelper.CurrentUser = new User
+                {
+                    id = "3cc5049b-7558-46ff-ab2f-c866d9826f59",
+                    Info = new UserInfo()
+                    {
+                        MobileNumber = "+380983841818",
+                        Description = "I am coder..."
+                    },
+                    Password = "123",
+                    Settings = new UserSettings
+                    {
+                        MapType = "Hybrid"
+                    },
+                    UserName = "qwe"//Nazar
+                };
+
+                var user1 = await FirebaseHelper.GetUser(ELogin.Text);
+                FirebaseHelper.CurrentUser = user1;
+
+                await Navigation.PushAsync(new MainPage());
+                return;
+            }
 
             this.IsBusy = true;
             string username = ELogin.Text ?? "", password = EPassword.Text ?? "";

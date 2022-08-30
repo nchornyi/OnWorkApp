@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using OnWork.Generics;
 using Xamarin.Forms;
 
 namespace OnWork.Models
@@ -24,12 +25,22 @@ namespace OnWork.Models
                 LocationIcon = ImageSource.FromResource("OnWork.Images.location.png");
             }
         }
+
+        public bool HasLocation() => TaskLocationItem != null;
+
+        public bool IsValid()
+        {
+            return !string.IsNullOrEmpty(Title) && !string.IsNullOrEmpty(Desc) && !double.IsNaN(Price) &&
+                    !string.IsNullOrEmpty(DateCreated) && !string.IsNullOrEmpty(OwnerNickName);
+        }
         
         public string id { get; set; }
         public string Title { get; set; }
         public string Desc { get; set; }
+        public string TaskType { get; set; }
+        public Range<double> Hours { get; set; }
         public TaskLocation TaskLocationItem { get; set; }
-        public string Price { get; set; }
+        public double Price { get; set; }
         public string DateCreated { get; set; }
         public string OwnerNickName { get; set; }
         public List<TaskRequest> Requests { get; set; } = new List<TaskRequest>();

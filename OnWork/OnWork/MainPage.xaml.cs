@@ -5,18 +5,22 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using OnWork.Infrastructure;
+using OnWork.Infrastructure.Enums;
+using OnWork.Pages;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.GoogleMaps;
 namespace OnWork
 {
     public partial class MainPage : ContentPage
     {
-
+        private string PreviousPointId;
         private Color NavBackColor = Color.LightSlateGray;
         private Color BGDark;
         private Color BGLight;
         public EUserType UserType;
-        private Distance distance = Distance.FromMeters(400);
+        private Distance DefaultDistance = Distance.FromMeters(400);
         [Obsolete]
         public MainPage()
         {
@@ -28,6 +32,7 @@ namespace OnWork
             LoadSettings();
 
             #region footer
+
             DefaultBackground();
             imgProfile.Source = ImageSource.FromResource("OnWork.Images.user.png");
             imgTasks.Source = ImageSource.FromResource("OnWork.Images.clipboard.png");
@@ -65,12 +70,38 @@ namespace OnWork
                 stckLogout.BackgroundColor = NavBackColor;
             };
             stckLogout.GestureRecognizers.Add(logoutTap);
+
             #endregion
+
+            if (Globals.Debug)
+            { 
+                //Tasks_OnTapped(this, null);
+                //Task.Run(() => Tasks_OnTapped(this, null));
+            }
+
+            map.MapClicked += Map_MapClicked;
 
             Task.Run(() => LoadMapOnMyLocation());
             LoadPins();
+        }
 
 
+        [Obsolete]
+        private async void Map_MapClicked(object sender, MapClickedEventArgs e)
+        {
+            if (Globals.MapMode == MapMode.View) return;
+
+            if (PreviousPointId != null)
+                map.Pins.Remove(map.Pins.FirstOrDefault(x => x.Tag.ToString() == PreviousPointId));
+
+            var place = PlacemarkHelper.GetPlacemarkAsync(e.Point);
+            if (place == null) return;
+
+            var pin = CreatePin(e.Point, $"Address: {place.Locality} {place.Thoroughfare} {place.SubThoroughfare}", "(Click here to select location)");
+            PreviousPointId = pin.Tag.ToString();
+            map.Pins.Add(pin);
+            map.SelectedPin = pin;
+            map.MoveToRegion(MapSpan.FromCenterAndRadius(pin.Position, DefaultDistance));
         }
 
         private void LoadSettings()
@@ -88,19 +119,30 @@ namespace OnWork
             var location = await locator.GetPositionAsync(TimeSpan.FromTicks(10000));
             Position position = new Position(location.Latitude, location.Longitude);
 
-            map.MoveToRegion(MapSpan.FromCenterAndRadius(position, distance));
+            map.MoveToRegion(MapSpan.FromCenterAndRadius(position, DefaultDistance));
         }
 
         [Obsolete]
-        private Pin CreatePin(Position location, string title, string desc, string taskid)
+        private Pin CreatePin(Position location, string title, string desc, string id = null)
         {
-            var pin = new Pin()
+            BitmapDescriptor icon = null;
+            if (id == null)
+            {
+                id = Guid.NewGuid().ToString();
+                icon = BitmapDescriptorFactory.FromBundle("test");
+            }
+            else
+            {
+                icon = BitmapDescriptorFactory.FromBundle("base");
+            }
+
+            var pin = new Pin
             {
                 Address = desc,
                 IsVisible = true,
                 Label = title,
-                Tag = taskid,
-                Icon = BitmapDescriptorFactory.FromBundle("base"),
+                Tag = id,
+                Icon = icon,
                 Position = location,
                 Type = PinType.Place
             };
@@ -119,12 +161,12 @@ namespace OnWork
                 map.Pins.Add(CreatePin(
                     new Position(item.TaskLocationItem.Location.Latitude,item.TaskLocationItem.Location.Longitude), 
                     item.Title + " " + item.Price,
-                    item.Desc+ "(Click for additional info)", 
+                     item.Desc + "(Click for additional info)",
                     item.id));
             }
 
             if(map.Pins.Count != 0)
-                map.MoveToRegion(MapSpan.FromCenterAndRadius(map.Pins.Last().Position, distance));
+                map.MoveToRegion(MapSpan.FromCenterAndRadius(map.Pins.Last().Position, DefaultDistance));
         }
 
         [Obsolete]
@@ -137,7 +179,8 @@ namespace OnWork
         [Obsolete]
         private async void Pin_Clicked(object sender, EventArgs e)
         {
-            var taskId = ((Pin)sender).Tag.ToString();
+            var pin = (Pin) sender;
+            var taskId = pin.Tag.ToString();
             var task = await FirebaseHelper.GetTaskItem(taskId);
 
             if (task != null)
@@ -146,6 +189,10 @@ namespace OnWork
                 page.CallbackEvent += PopupPageTaskClosed_CallbackEvent;
                 await PopupNavigation.PushAsync(page);
             }
+            else
+            {
+                Tasks_OnTapped(pin, null);
+            }
         }
 
         [Obsolete]
@@ -153,6 +200,26 @@ namespace OnWork
         {
             DefaultBackground();
             ReloadPins();
+            UpdateMainPageControlsVisibility();
+        }
+
+        private void UpdateMainPageControlsVisibility()
+        {
+            switch (Globals.MapMode)
+            {
+                case MapMode.View:
+                    slHeader.IsVisible = true;
+                    slFooter.IsVisible = true;
+
+                    break;
+                case MapMode.Select:
+                    slHeader.IsVisible = false;
+                    slFooter.IsVisible = false;
+
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         public void DefaultBackground()
@@ -206,7 +273,9 @@ namespace OnWork
             UserType = EUserType.Employer;
         }
 
-        #region OnTapped
+        #region 
+
+        [Obsolete]
         private async void Profile_OnTapped(object sender, System.EventArgs e)
         {
             var page = new Pages.PageProfile("Profile - ", UserType);
@@ -216,11 +285,23 @@ namespace OnWork
         [Obsolete]
         private async void Tasks_OnTapped(object sender, System.EventArgs e)
         {
-            var page = new Pages.PageTasks("Tasks - ", UserType);
+            PageTasks page;
+
+            if (sender is Pin pin)
+            {
+                slFooter.IsVisible = true;
+                page = new Pages.PageTasks("Tasks - ", UserType, pin);
+            }
+            else
+            {
+                page = new Pages.PageTasks("Tasks - ", UserType);
+            }
+
             page.CallbackEvent += PopupPageTaskClosed_CallbackEvent;
             await Navigation.PushAsync(page);
         }
 
+        [Obsolete]
         private async void Requests_OnTapped(object sender, EventArgs e)
         {
             var page = new Pages.PageRequests("Requests - ", UserType);
@@ -228,6 +309,7 @@ namespace OnWork
             await Navigation.PushAsync(page);
         }
 
+        [Obsolete]
         private async void Settings_OnTapped(object sender, System.EventArgs e)
         {
             var page = new Pages.PageSettings("Settings - ", UserType);

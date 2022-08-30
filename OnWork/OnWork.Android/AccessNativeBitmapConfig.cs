@@ -29,6 +29,11 @@ namespace OnWork.Droid
                 case "base":
                     resId = Resource.Drawable.worklocation;
                     break;
+
+                case "test":
+                    resId = Resource.Drawable.pin;
+                    break;
+
             }
 
             return AndroidBitmapDescriptorFactory.FromResource(resId);

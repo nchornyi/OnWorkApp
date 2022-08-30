@@ -1,14 +1,16 @@
 ﻿using OnWork.Models;
-using Plugin.Geolocator.Abstractions;
 using Rg.Plugins.Popup.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using OnWork.Generics;
+using OnWork.Infrastructure;
 using Xamarin.Forms;
+using Xamarin.Forms.GoogleMaps;
 using Xamarin.Forms.Xaml;
+using Position = Plugin.Geolocator.Abstractions.Position;
 
 namespace OnWork.Pages.Popup
 {
@@ -16,89 +18,101 @@ namespace OnWork.Pages.Popup
     public partial class PopupPageAddTask : Rg.Plugins.Popup.Pages.PopupPage
     {
         public event EventHandler<object> CallbackEvent;
+        private TaskItem NewTask = null;
+        private Position position;
 
-
-        private List<TaskLocation> LocationList { get; set; }
-        public PopupPageAddTask()
+        public PopupPageAddTask(Pin pin = null)
         {
             InitializeComponent();
 
-            LocationList = new List<TaskLocation>()
-            {
-                new TaskLocation()
-                {
-                    Title = "Карма Кава",
-                    Location = new Position(49.5523761,25.5925439)
-                },
-                new TaskLocation()
-                {
-                    Title = "Мамонт",
-                    Location = new Position(49.5491325,25.5934022)
-                },
-                new TaskLocation()
-                {
-                    Title = "ЖД",
-                    Location = new Position(49.5516383,25.5964921)
-                },
-                new TaskLocation()
-                {
-                    Title = "ФКІТ",
-                    Location = new Position(49.5607243,25.5937135)
-                },
-                new TaskLocation()
-                {
-                    Title = "Гімназія",
-                    Location = new Position(49.5526858,25.5990243)
-                }
-            };
+            imgSelectLocation.Source = ImageSource.FromResource("OnWork.Images.pin.png");
+            pTaskType.ItemsSource = Globals.TaskTypesList;
 
-            lvLocations.BindingContext = LocationList;
-            lvLocations.ItemsSource = LocationList;
+            if (pin != null)
+            {
+                LoadNotFinishedTaskItem();
+
+                position = new Position(pin.Position.Latitude, pin.Position.Longitude);
+                var place = PlacemarkHelper.GetPlacemarkAsync(pin.Position);
+                ELocation.Text = $"{place.Locality} {place.Thoroughfare} {place.SubThoroughfare}";
+            }
+        }
+
+        private void LoadNotFinishedTaskItem()
+        {
+            ETitle.Text = Globals.NotFinishedTaskItem.Title;
+            pTaskType.SelectedItem = Globals.NotFinishedTaskItem.TaskType;
+            EDescription.Text = Globals.NotFinishedTaskItem.Desc;
+            EPrice.Text = Globals.NotFinishedTaskItem.Price.ToString();
+            rsTime.LowerValue = Globals.NotFinishedTaskItem.Hours.Minimum;
+            rsTime.UpperValue = Globals.NotFinishedTaskItem.Hours.Maximum;
+        }
+
+        private async void Location_OnTapped(object sender, EventArgs e)
+        {
+            try
+            {
+                Globals.NotFinishedTaskItem = NewTask = new TaskItem(DateTime.Now)//true 
+                {
+                    OwnerNickName = FirebaseHelper.CurrentUser.UserName,
+                    Title = ETitle.Text,
+                    TaskType = pTaskType.SelectedItem?.ToString(),
+                    Desc = EDescription.Text,
+                    Hours = new Range<double>(rsTime.LowerValue, rsTime.UpperValue),
+                    Price = string.IsNullOrEmpty(EPrice.Text) ? default : Convert.ToDouble(EPrice.Text)
+                };
+            }
+            catch (Exception ex)
+            {
+            }
+
+            await Navigation.PopPopupAsync();
+        }
+
+        private void BtnSelectLocation_OnClicked(object sender, EventArgs e)
+        {
         }
 
         private void ItemSelected(object sender, ItemTappedEventArgs e)
         {
             ELocation.Text = ((TaskLocation)e.Item).Title;
-            lvLocations.IsVisible = false;
+            //lvLocations.IsVisible = false;
         }
-        private TaskItem NewTask = null;
+
         private async void btnAdd_Clicked(object sender, EventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(ETitle.Text) &&
-                !string.IsNullOrWhiteSpace(EDescription.Text) &&
-                !string.IsNullOrWhiteSpace(ELocation.Text) &&
-                !string.IsNullOrWhiteSpace(EPrice.Text))
+            this.IsBusy = true;
+            var item = new TaskItem(DateTime.Now) //true 
             {
-                this.IsBusy = true;
-                var item = new TaskItem(DateTime.Now)//true 
-                {
-                    OwnerNickName = FirebaseHelper.CurrentUser.UserName,
-                    Desc = EDescription.Text,
-                    Title = ETitle.Text,
-                    TaskLocationItem = LocationList.FirstOrDefault(x=>x.Title== ELocation.Text),
-                    Price = EPrice.Text
-                };
-
-                if(item.TaskLocationItem == null)
-                {
-                    NewTask = null;
-                    await Navigation.PopPopupAsync();
-                    return;
-                }
-
-                //  MessagingCenter.Send<PopupPageAddTask, string>(this, "msg", "test");
-                await FirebaseHelper.AddTaskItem(item);
-                // Close the last PopupPage int the PopupStack
-                NewTask = item;
-                this.IsBusy = false;
-                await Navigation.PopPopupAsync();
-
-            }
-            else
+                OwnerNickName = FirebaseHelper.CurrentUser.UserName,
+                Title = ETitle.Text,
+                Desc = EDescription.Text,
+                TaskType = pTaskType.SelectedItem.ToString(),
+                Hours = new Range<double>(rsTime.LowerValue, rsTime.UpperValue),
+                TaskLocationItem = new TaskLocation(ELocation.Text, position),
+                Price = Convert.ToDouble(EPrice.Text)
+            };
+            if (!item.IsValid())
             {
-                //await Navigation.PopPopupAsync();//delete in release!!!
                 await DisplayAlert("Alert", "All fields need to be filled!", "OK");
+                return;
             }
+
+            if (item.TaskLocationItem == null)
+            {
+                NewTask = null;
+                await Navigation.PopPopupAsync();
+                return;
+            }
+
+            Globals.NotFinishedTaskItem = null;
+
+            //  MessagingCenter.Send<PopupPageAddTask, string>(this, "msg", "test");
+            await FirebaseHelper.AddTaskItem(item);
+            // Close the last PopupPage int the PopupStack
+            NewTask = item;
+            this.IsBusy = false;
+            await Navigation.PopPopupAsync();
         }
 
         #region PppupEvents
@@ -176,6 +190,6 @@ namespace OnWork.Pages.Popup
         }
         #endregion
 
-      
+        
     }
 }

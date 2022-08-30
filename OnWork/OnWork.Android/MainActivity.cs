@@ -70,9 +70,9 @@ namespace OnWork.Droid
                     // Permissions already granted - display a message.
                 }
 
-                Position position = new Position(36.9628066, -122.0194722);
-                MapSpan mapSpan = new MapSpan(position, 0.05, 0.05);
-                Map map = new Map();
+                var position = new Position(36.9628066, -122.0194722);
+                var mapSpan = new MapSpan(position, 0.05, 0.05);
+                var map = new Map();
             }
         }
 

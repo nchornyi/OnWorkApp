@@ -66,14 +66,16 @@ namespace OnWork
         public static List<TaskRequest> GetRequests(string user, EUserType userType)
         {
             var requests = new List<TaskRequest>();
+            var tasksList = new List<TaskItem>();
 
-            List<TaskItem> tasksList = new List<TaskItem>();
             switch (userType)
             {
                 case EUserType.Employer:
                     tasksList = Task.Run(async () => await GetTasks()).Result.Where(x => x?.OwnerNickName == user).ToList();
+
                     foreach (var task in tasksList)
                         requests.AddRange(task.Requests);
+
                     break;
                 case EUserType.Employee:
                     tasksList = Task.Run(async () => await GetTasks()).Result.ToList();

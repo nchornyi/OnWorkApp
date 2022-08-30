@@ -25,14 +25,14 @@
                                     <RowDefinition Height="auto"></RowDefinition>
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="90"/>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="70"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <Label Grid.Row="0" Grid.Column="0" Text="{Binding Title}" Style="{StaticResource CellStyle}" />
-                                <Label Grid.Row="0" Grid.Column="1" Text="{Binding Desc}" Style="{StaticResource CellStyle}"  />
-                                <Label Grid.Row="0" Grid.Column="2" Text="{Binding Price}" Style="{StaticResource CellStyle}"
+                                <Label Grid.Row="0" Grid.Column="0" LineBreakMode="TailTruncation" Text="{Binding Title}" Style="{StaticResource CellStyle}" />
+                                <Label Grid.Row="0" Grid.Column="1" LineBreakMode="TailTruncation" Text="{Binding Desc}" Style="{StaticResource CellStyle}"  />
+                                <Label Grid.Row="0" Grid.Column="2" LineBreakMode="TailTruncation" Text="{Binding Price}" Style="{StaticResource CellStyle}"
                                            TextColor="Green"/>
                                 <Image Grid.Row="0" Grid.Column="3" Source="{Binding LocationIcon}"  WidthRequest="50" HeightRequest="40"
                                        Margin="2" HorizontalOptions="End" />
@@ -43,6 +43,16 @@
              
             </ListView.ItemTemplate>
         </ListView>
+        <StackLayout x:Name="stckFilter">
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="Filter_OnTapped"/>
+                </StackLayout.GestureRecognizers>
+            <Button Margin="0,0,40,-68"  BorderWidth="1.5" BorderColor="Black" CornerRadius="50" BackgroundColor="{StaticResource BGDark}"
+                    WidthRequest="70" HeightRequest="70" HorizontalOptions="End" />
+            <Image x:Name="imgFilter" Aspect="Fill" Margin="0,0,45,20"
+                   WidthRequest="60" HeightRequest="60" HorizontalOptions="End" />
+        </StackLayout>
+
         <Button x:Name="btnAddItem" Margin="0,0,30,30" HeightRequest="90" WidthRequest="90" HorizontalOptions="End" Text="+" CornerRadius="50"
                 BackgroundColor="{StaticResource BGDark}" Font="45" BorderWidth="1.5" BorderColor="Black"
                 Clicked="btnAddItem_Clicked"></Button>
