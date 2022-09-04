@@ -30,7 +30,7 @@ namespace OnWork.Droid
                     resId = Resource.Drawable.worklocation;
                     break;
 
-                case "test":
+                case "pin":
                     resId = Resource.Drawable.pin;
                     break;
 

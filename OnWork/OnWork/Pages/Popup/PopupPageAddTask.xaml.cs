@@ -107,7 +107,7 @@ namespace OnWork.Pages.Popup
 
             Globals.NotFinishedTaskItem = null;
 
-            //  MessagingCenter.Send<PopupPageAddTask, string>(this, "msg", "test");
+            //  MessagingCenter.Send<PopupPageAddTask, string>(this, "msg", "pin");
             await FirebaseHelper.AddTaskItem(item);
             // Close the last PopupPage int the PopupStack
             NewTask = item;

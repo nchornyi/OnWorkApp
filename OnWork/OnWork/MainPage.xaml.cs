@@ -85,7 +85,6 @@ namespace OnWork
             LoadPins();
         }
 
-
         [Obsolete]
         private async void Map_MapClicked(object sender, MapClickedEventArgs e)
         {
@@ -117,7 +116,7 @@ namespace OnWork
             locator.DesiredAccuracy = 50;
 
             var location = await locator.GetPositionAsync(TimeSpan.FromTicks(10000));
-            Position position = new Position(location.Latitude, location.Longitude);
+            var position = new Position(location.Latitude, location.Longitude);
 
             map.MoveToRegion(MapSpan.FromCenterAndRadius(position, DefaultDistance));
         }
@@ -129,7 +128,7 @@ namespace OnWork
             if (id == null)
             {
                 id = Guid.NewGuid().ToString();
-                icon = BitmapDescriptorFactory.FromBundle("test");
+                icon = BitmapDescriptorFactory.FromBundle("pin");
             }
             else
             {
@@ -201,6 +200,7 @@ namespace OnWork
             DefaultBackground();
             ReloadPins();
             UpdateMainPageControlsVisibility();
+            LoadMapOnMyLocation();
         }
 
         private void UpdateMainPageControlsVisibility()
@@ -247,8 +247,6 @@ namespace OnWork
         {
 
         }
-
-
 
         private void btnEmployee_Pressed(object sender, System.EventArgs e)
         {
