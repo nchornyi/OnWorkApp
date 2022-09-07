@@ -38,6 +38,15 @@ namespace OnWork.Pages.Popup
                     break;
                 case EUserType.Employee:
 
+                    if (task.OwnerNickName == FirebaseHelper.CurrentUser.UserName)
+                    {
+                        btnSendRequest.IsEnabled = false;
+                        btnSendRequest.Text = "You can't send requests to your tasks";
+                        btnSendRequest.BackgroundColor = Color.LightGray;
+
+                        return;
+                    }
+
                     var userRequest = task.Requests.FirstOrDefault(x => x.UserNickName == FirebaseHelper.CurrentUser.UserName);
                     if (userRequest == null)
                     {
@@ -78,7 +87,7 @@ namespace OnWork.Pages.Popup
                     var userRequest = item.Requests.FirstOrDefault(x => x.UserNickName == FirebaseHelper.CurrentUser.UserName);
                     if (userRequest == null)
                     {
-                        var request = new TaskRequest() { UserNickName = FirebaseHelper.CurrentUser.UserName, Description = " " };
+                        var request = new TaskRequest() { UserNickName = FirebaseHelper.CurrentUser.UserName };
                         item.Requests.Add(request);
                         await FirebaseHelper.UpdateTaskItemAsync(item);
                     }

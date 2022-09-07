@@ -24,7 +24,7 @@
             <Label x:Name="lblLocation" Text="{Binding Description,StringFormat='Desc: {0}'}" Style="{StaticResource LabelTaskStyle}"/>
             <Label x:Name="lblRequestDate" Text="{Binding RequestDate,StringFormat='RequestDate: {0}'}" Style="{StaticResource LabelTaskStyle}"/>
             <Label x:Name="lblStatus" Text="{Binding Status,StringFormat='Status: {0}'}" Style="{StaticResource LabelTaskStyle}"/>
-            <Button x:Name="btnRevertRequest" BackgroundColor="LightGreen" Margin="0,10,0,0" Text="Revert request" WidthRequest="300"
+            <Button x:Name="btnRevertRequest" BackgroundColor="Gold" Margin="0,10,0,0" Text="Revert request" WidthRequest="300"
                     Clicked="btnSendRequest_Clicked"></Button>
             <Button x:Name="btnApprove" BackgroundColor="LightGreen" Margin="0,10,0,0" Text="Approve" WidthRequest="300"
                     Clicked="btnApproveRequest_Clicked"></Button>

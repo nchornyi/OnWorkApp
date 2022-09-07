@@ -43,6 +43,7 @@
 
   <ItemGroup>
     <PackageReference Include="FirebaseDatabase.net" Version="4.0.6" />
+    <PackageReference Include="Google.Api.CommonProtos" Version="2.6.0" />
     <PackageReference Include="Rg.Plugins.Popup" Version="2.0.0.11" />
     <PackageReference Include="Xam.Plugin.Geolocator" Version="4.5.0.6" />
     <PackageReference Include="Xamarin.CommunityToolkit" Version="1.1.0" />
@@ -91,5 +92,8 @@
     <EmbeddedResource Update="Pages\Popup\PopupPageFilterTasks.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Effects\" />
   </ItemGroup>
 </Project>

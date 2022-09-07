@@ -9,6 +9,9 @@ namespace OnWork.Infrastructure
     public static class Globals
     {
         public static bool Debug { get; set; } = true;
+        public static string DebugUserName { get; set; } = "Vadim";
+        //public static string DebugUserName { get; set; } = "Nazar";
+        public static string DebugPassword { get; set; } = "1";
         public static MapMode MapMode { get; set; } = MapMode.View;
         public static FilterItem AppliedFilterItem = null;
         public static TaskItem NotFinishedTaskItem = null;

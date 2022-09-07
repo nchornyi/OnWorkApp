@@ -13,16 +13,18 @@ namespace OnWork.Pages.Popup
     {
         public event EventHandler<object> CallbackEvent;
 
-        public TaskRequest item;
+        private TaskItem taskItem;
+        public TaskRequest Request;
         private EUserType UserType;
         private bool SomethingChanged = false;
         public PopupPageRequest(TaskRequest request, EUserType userType)
         {
             InitializeComponent();
             UserType = userType;
-            item = request;
-            OpenedRequest.BindingContext = item;
-            
+            Request = request;
+            OpenedRequest.BindingContext = Request;
+            taskItem = Task.Run(async () => await FirebaseHelper.GetTaskItem(request)).Result;
+
             switch (userType)
             {
                 case EUserType.Employer:
@@ -50,7 +52,6 @@ namespace OnWork.Pages.Popup
             switch (UserType)
             {
                 case EUserType.Employer:
-
 
                     var answer = true;//await DisplayAlert("Warning", "Do you really want to delete task?", "Yes", "No");
                     if (answer)
@@ -89,14 +90,28 @@ namespace OnWork.Pages.Popup
 
         private async void btnApproveRequest_Clicked(object sender, EventArgs e)
         {
-            //SomethingChanged = true;
-            //this.IsBusy = false;
-            //await Navigation.PopPopupAsync();
+            Request.SetStatus(EStatus.Approved);
+            UpdateTaskItemRequest(Request);
+            SomethingChanged = true;
+            this.IsBusy = false;
+            await FirebaseHelper.UpdateTaskItemAsync(taskItem);
+            await Navigation.PopPopupAsync();
         }
 
-        private void btnDeclineRequest_Clicked(object sender, EventArgs e)
+        private async void btnDeclineRequest_Clicked(object sender, EventArgs e)
         {
+            Request.SetStatus(EStatus.Declined);
+            UpdateTaskItemRequest(Request);
+            SomethingChanged = true;
+            this.IsBusy = false;
+            await FirebaseHelper.UpdateTaskItemAsync(taskItem);
+            await Navigation.PopPopupAsync();
+        }
 
+        private void UpdateTaskItemRequest(TaskRequest request)
+        {
+            taskItem.Requests = taskItem.Requests.Where(x => x.id != request.id).ToList();
+            taskItem.Requests.Add(request);
         }
 
         #region PopupEvents

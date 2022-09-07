@@ -23,10 +23,15 @@ namespace OnWork.Pages
             UserType = userType;
             Title = title + userType.ToString();
 
+            LoadRequest();
+        }
 
-            var requests = FirebaseHelper.GetRequests(FirebaseHelper.CurrentUser.UserName, userType);
+        private void LoadRequest()
+        {
+            var requests = FirebaseHelper.GetRequests(FirebaseHelper.CurrentUser.UserName, UserType);
             RequestsList.ItemsSource = taskRequests = requests;
         }
+
         protected override void OnDisappearing()
         {
             base.OnDisappearing();
@@ -47,12 +52,7 @@ namespace OnWork.Pages
 
         private void PopupPageTaskClosed_CallbackEvent(object sender, object e)
         {
-
-        }
-
-        private void btnRequest_Clicked(object sender, EventArgs e)
-        {
-
+            LoadRequest();
         }
     }
 }

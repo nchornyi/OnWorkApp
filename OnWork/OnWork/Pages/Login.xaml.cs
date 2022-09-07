@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using OnWork.Infrastructure;
 using OnWork.Models;
 using Xamarin.Forms;
+using Xamarin.Forms.GoogleMaps;
 using Xamarin.Forms.Xaml;
 
 namespace OnWork.Pages
@@ -23,8 +24,8 @@ namespace OnWork.Pages
 
             if (Globals.Debug)
             {
-                ELogin.Text = "Nazar"; EPassword.Text = "123";
-                btnLogin_Clicked(this,null);
+                ELogin.Text = Globals.DebugUserName; EPassword.Text = Globals.DebugPassword;
+                btnLogin_Clicked(this, null);
             }
         }
 
@@ -36,18 +37,18 @@ namespace OnWork.Pages
             {
                 FirebaseHelper.CurrentUser = new User
                 {
-                    id = "3cc5049b-7558-46ff-ab2f-c866d9826f59",
+                    //id = "3cc5049b-7558-46ff-ab2f-c866d9826f59",
                     Info = new UserInfo()
                     {
                         MobileNumber = "+380983841818",
                         Description = "I am coder..."
                     },
-                    Password = "123",
+                    Password = EPassword.Text,
                     Settings = new UserSettings
                     {
-                        MapType = "Hybrid"
+                        MapType = MapType.Hybrid.ToString()
                     },
-                    UserName = "qwe"//Nazar
+                    UserName = ELogin.Text
                 };
 
                 var user1 = await FirebaseHelper.GetUser(ELogin.Text);

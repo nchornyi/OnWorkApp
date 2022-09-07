@@ -83,10 +83,33 @@ namespace OnWork
 
             Task.Run(() => LoadMapOnMyLocation());
             LoadPins();
+
+            //var arr = new List<Position>(map.Pins.Select(x => x.Position));
+            //arr.Add(GetMyPosition());
+           
+            //GoogleMapsHelper.DrawPoliline(arr.ToArray());
+           
         }
 
+        public void DrawPoliline(params Position[] positions)
+        {
+            var polyline = new Polyline
+            {
+                StrokeColor = Color.MediumPurple,
+                StrokeWidth = 5,
+                ZIndex = 0
+            };
+
+            foreach (var position in positions)
+            {
+                polyline.Positions.Add(position);
+            }
+
+            map.Polylines.Add(polyline);
+        }
+        
         [Obsolete]
-        private async void Map_MapClicked(object sender, MapClickedEventArgs e)
+        private void Map_MapClicked(object sender, MapClickedEventArgs e)
         {
             if (Globals.MapMode == MapMode.View) return;
 
@@ -109,14 +132,10 @@ namespace OnWork
             Enum.TryParse(settings.MapType, out MapType type);
             map.MapType =  settings.MapType == null ? MapType.Satellite : type;
         }
-
-        private async Task LoadMapOnMyLocation()
+        
+        private void LoadMapOnMyLocation()
         {
-            var locator = CrossGeolocator.Current;
-            locator.DesiredAccuracy = 50;
-
-            var location = await locator.GetPositionAsync(TimeSpan.FromTicks(10000));
-            var position = new Position(location.Latitude, location.Longitude);
+            var position = GoogleMapsHelper.GetMyPosition();
 
             map.MoveToRegion(MapSpan.FromCenterAndRadius(position, DefaultDistance));
         }

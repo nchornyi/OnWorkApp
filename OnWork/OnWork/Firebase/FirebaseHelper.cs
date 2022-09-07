@@ -13,7 +13,7 @@ namespace OnWork
     public static class FirebaseHelper
     {
         public static User CurrentUser { get; set; }
-        public static FirebaseClient firebase;
+        private static readonly FirebaseClient firebase;
         static FirebaseHelper()
         {
             try
@@ -25,12 +25,22 @@ namespace OnWork
 
             }
         }
+
         #region TaskItem
+
         private static async Task<FirebaseObject<TaskItem>> FBGetTaskItem(string id) => 
             (await firebase.Child(ETables.Tasks.ToString())
                            .OnceAsync<TaskItem>())
                            .FirstOrDefault(x => x.Object.id == id);
 
+        private static async Task<FirebaseObject<TaskItem>> FBGetTaskItem(TaskRequest request) =>
+            (await firebase.Child(ETables.Tasks.ToString()).OnceAsync<TaskItem>())
+                           .FirstOrDefault(x=> x.Object.Requests.Any(r => r.id == request.id));
+
+        //private static async Task<FirebaseObject<TaskRequest>> FBGetRequestItem(string id) =>
+        //    (await firebase.Child(ETables.Tasks.ToString()).Child(ETables.Requests.ToString())
+        //                   .OnceAsync<TaskRequest>())
+        //                   .FirstOrDefault(r => r.Object.id == id);
         public static async Task AddTaskItem(TaskItem task)
         {
             await firebase.Child(ETables.Tasks.ToString()).PostAsync(task);
@@ -54,9 +64,15 @@ namespace OnWork
             return taskItem?.Object;
         }
 
+        public static async Task<TaskItem> GetTaskItem(TaskRequest request)
+        {
+            var taskItem = await FBGetTaskItem(request);
+            return taskItem?.Object;
+        }
+
         public static async Task UpdateTaskItemAsync(TaskItem task)
         {
-            task.LocationIcon = null;
+            task.LocationIcon = null;//???
             var taskItem = await FBGetTaskItem(task.id);
             await firebase.Child(ETables.Tasks.ToString()).Child(taskItem?.Key).PutAsync(task);
         }
@@ -88,6 +104,7 @@ namespace OnWork
 
             return requests;
         }
+
         #endregion
 
         #region User

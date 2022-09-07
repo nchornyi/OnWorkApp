@@ -43,7 +43,7 @@ namespace OnWork.Pages.Popup
             ETitle.Text = Globals.NotFinishedTaskItem.Title;
             pTaskType.SelectedItem = Globals.NotFinishedTaskItem.TaskType;
             EDescription.Text = Globals.NotFinishedTaskItem.Desc;
-            EPrice.Text = Globals.NotFinishedTaskItem.Price.ToString();
+            EPrice.Text = Globals.NotFinishedTaskItem.Price == 0 ? "" : Globals.NotFinishedTaskItem.Price.ToString();
             rsTime.LowerValue = Globals.NotFinishedTaskItem.Hours.Minimum;
             rsTime.UpperValue = Globals.NotFinishedTaskItem.Hours.Maximum;
         }

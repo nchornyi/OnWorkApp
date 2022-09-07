@@ -18,5 +18,7 @@ namespace OnWork.Models
         public string RequestDate { get; set; }
         public string Description { get; set; }
         public string Status { get; set; }
+
+        public void SetStatus(EStatus status) => Status = status.ToString();
     }
 }

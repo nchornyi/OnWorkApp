@@ -4,7 +4,9 @@
              x:Class="OnWork.Pages.PageRequests">
     <ContentPage.Content>
         <StackLayout>
-            <ListView x:Name="RequestsList" SeparatorColor="Black" RefreshControlColor="Black" 
+            <ListView x:Name="RequestsList" 
+                      SeparatorColor="Black" 
+                      RefreshControlColor="Black"
                       ItemTapped="RequestsList_ItemTapped" >
                 <ListView.Header>
                     <StackLayout BackgroundColor="#cccccc" Orientation="Horizontal">
