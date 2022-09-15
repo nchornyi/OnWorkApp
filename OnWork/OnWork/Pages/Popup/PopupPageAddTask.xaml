@@ -21,7 +21,7 @@
                      HorizontalOptions="Center" 
                      Margin="40,10">
         <StackLayout>
-            <Label HorizontalOptions="Center">Create Task</Label>
+            <Label HorizontalOptions="Center" FontSize="24" FontAttributes="Bold">Create Task</Label>
             <!--<ActivityIndicator x:Name="activityIndicator" IsRunning="{Binding IsBusy}" VerticalOptions="Center" HorizontalOptions="Center" />-->
             <Label>Title</Label>
             <Entry x:Name="ETitle"></Entry>
@@ -29,7 +29,6 @@
                     ItemsSource="{Binding TaskTypesList}" />
             <Label>Description</Label>
             <Entry  x:Name="EDescription"></Entry>
-            <Label>Hours</Label>
             <!--<Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="180"></ColumnDefinition>

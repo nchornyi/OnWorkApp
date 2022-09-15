@@ -85,9 +85,9 @@ namespace OnWork
             LoadPins();
 
             //var arr = new List<Position>(map.Pins.Select(x => x.Position));
-            //arr.Add(GetMyPosition());
+            //arr.Add(GoogleMapsHelper.GetMyPosition());
            
-            //GoogleMapsHelper.DrawPoliline(arr.ToArray());
+            //DrawPoliline(arr.ToArray());
            
         }
 

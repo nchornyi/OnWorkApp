@@ -105,7 +105,9 @@ namespace OnWork.Pages
             var filter = Globals.AppliedFilterItem;
             var filteredTasks = Tasks.Where(x => x.TaskType == filter.TaskType
                                                  && filter.Time.ContainsRange(x.Hours)
-                                                 && filter.Price.ContainsValue(x.Price)).ToList(); //ToDo: Distance
+                                                 && filter.Price.ContainsValue(x.Price)
+                                                 && filter.Distance > x.GetDistance()).ToList();
+
             return filteredTasks;
         }
 
