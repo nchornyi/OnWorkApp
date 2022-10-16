@@ -6,7 +6,6 @@
         <!-- Application resource dictionary -->
         <ResourceDictionary>
             <Style x:Key="CellStyle" TargetType="Label">
-                <Setter Property="TextColor" Value="Black"/>
                 <Setter Property="VerticalOptions" Value="Center"/>
                 <Setter Property="TextColor" Value="Black"/>
                 <Setter Property="Margin" Value="10,0,10,0"/>

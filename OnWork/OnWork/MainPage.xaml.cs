@@ -8,6 +8,7 @@ using System.Windows.Input;
 using OnWork.Infrastructure;
 using OnWork.Infrastructure.Enums;
 using OnWork.Pages;
+using OnWork.Pages.Popup;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.GoogleMaps;
@@ -253,6 +254,7 @@ namespace OnWork
         {
             try
             {
+                imgRoute.Source = ImageSource.FromResource("OnWork.Images.route.png");
                 BGDark = (Color)Application.Current.Resources["BGDark"];
                 BGLight = (Color)Application.Current.Resources["BGLight"];
             }
@@ -269,6 +271,7 @@ namespace OnWork
 
         private void btnEmployee_Pressed(object sender, System.EventArgs e)
         {
+            stckRoute.IsVisible = true;
             btnEmployee.BorderWidth = 2;
             btnEmployer.BorderWidth = 0;
 
@@ -281,6 +284,7 @@ namespace OnWork
 
         private void btnEmployer_Pressed(object sender, System.EventArgs e)
         {
+            stckRoute.IsVisible = false;
             btnEmployer.BorderWidth = 2;
             btnEmployee.BorderWidth = 0;
 
@@ -290,7 +294,19 @@ namespace OnWork
             UserType = EUserType.Employer;
         }
 
-        #region 
+        [Obsolete]
+        private async void Route_OnTapped(object sender, EventArgs e)
+        {
+            var page = new PopupPageCreateRoute();
+            page.CallbackEvent += PopupClosed_CallbackEvent;
+            await PopupNavigation.PushAsync(page);
+        }
+
+        private void PopupClosed_CallbackEvent(object sender, object e)
+        {
+        }
+
+        #region footer
 
         [Obsolete]
         private async void Profile_OnTapped(object sender, System.EventArgs e)
@@ -347,6 +363,5 @@ namespace OnWork
             FirebaseHelper.CurrentUser = null;
             await App.Current.MainPage.Navigation.PopAsync();
         }
-     
     }
 }

@@ -19,6 +19,7 @@
     <None Remove="Images\logout.png" />
     <None Remove="Images\pin.png" />
     <None Remove="Images\request.png" />
+    <None Remove="Images\route.png" />
     <None Remove="Images\settings.png" />
     <None Remove="Images\test.png" />
     <None Remove="Images\unfilter.png" />
@@ -34,6 +35,7 @@
     <EmbeddedResource Include="Images\OnWorkLogo.png" />
     <EmbeddedResource Include="Images\pin.png" />
     <EmbeddedResource Include="Images\request.png" />
+    <EmbeddedResource Include="Images\route.png" />
     <EmbeddedResource Include="Images\settings.png" />
     <EmbeddedResource Include="Images\test.png" />
     <EmbeddedResource Include="Images\unfilter.png" />
@@ -42,6 +44,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="ExtendedControls.ExtCollectionView.XForms" Version="1.0.21" />
     <PackageReference Include="FirebaseDatabase.net" Version="4.0.6" />
     <PackageReference Include="Google.Api.CommonProtos" Version="2.6.0" />
     <PackageReference Include="Rg.Plugins.Popup" Version="2.0.0.11" />
@@ -87,6 +90,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Pages\Popup\PopupPageAddTask.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Pages\Popup\PopupPageCreateRoute.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Pages\Popup\PopupPageFilterTasks.xaml">

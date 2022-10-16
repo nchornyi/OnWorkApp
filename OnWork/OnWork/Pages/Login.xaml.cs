@@ -1,9 +1,4 @@
-﻿using Firebase.Database;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using OnWork.Infrastructure;
 using OnWork.Models;
 using Xamarin.Forms;
@@ -18,6 +13,7 @@ namespace OnWork.Pages
         public Login()
         {
             InitializeComponent();
+            imgLogo.Source = ImageSource.FromResource("OnWork.Images.OnWorkLogo.png");
             NavigationPage.SetHasNavigationBar(this, false);
             this.BindingContext = this;
             //this.BackgroundImageSource = "Images.location.png";

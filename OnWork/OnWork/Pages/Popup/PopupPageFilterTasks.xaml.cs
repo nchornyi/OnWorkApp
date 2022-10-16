@@ -45,7 +45,7 @@ namespace OnWork.Pages.Popup
             await Navigation.PopPopupAsync();
         }
 
-        #region PppupEvents
+        #region PopupEvents
 
         protected override void OnAppearing()
         {
