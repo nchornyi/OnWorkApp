@@ -54,5 +54,40 @@ namespace OnWork.Pages
         {
             LoadRequest();
         }
+
+        //private void Ecv_OnSelectionChanging(object sender, ExtendedControls.ExtCollectionView.XForms.EventArgs.SelectedItemsChangingEventArgs args)
+        //{
+
+        //}
+
+        //private void Ecv_OnSelectionChanged(object sender, ExtendedControls.ExtCollectionView.XForms.EventArgs.SelectedItemsChangedEventArgs args)
+        //{
+
+        //}
+
+        //private void Ecv_OnChildrenReordered(object sender, EventArgs e)
+        //{
+
+        //}
+
+        //private void Ecv_OnItemDragStarted(object sender, ExtendedControls.ExtCollectionView.XForms.EventArgs.DragStartedEventArgs args)
+        //{
+
+        //}
+
+        //private void Ecv_OnItemIntersecting(object sender, ExtendedControls.ExtCollectionView.XForms.EventArgs.IntersectionEventArgs args)
+        //{
+
+        //}
+
+        //private void Ecv_OnItemDropped(object sender, ExtendedControls.ExtCollectionView.XForms.EventArgs.DropEventArgs args)
+        //{
+
+        //}
+
+        //private void Ecv_OnItemSourceChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs args)
+        //{
+
+        //}
     }
 }

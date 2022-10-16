@@ -1,8 +1,63 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:control="clr-namespace:ExtendedControls.ExtCollectionView.XForms.Control;assembly=ExtendedControls.ExtCollectionView.XForms"
              x:Class="OnWork.Pages.PageRequests">
     <ContentPage.Content>
+        <!--<StackLayout Spacing="5">
+            <control:ExtendedCollectionView 
+                                        SelectionMode="Single" ItemsSize="60" SpanCount="2"
+                                        OrientationMode="Vertical" ItemsSpacing="5"
+                                        SelectionChanging="Ecv_OnSelectionChanging"
+                                        SelectionChanged="Ecv_OnSelectionChanged"
+                                        DefaultSelectedItemColor="LightGray" DragNDropEnabled="True"
+                                        SelectedItem="{Binding SelectedMonkey}"
+                                        CurrentItem="{Binding CurrentMonkey}" 
+                                        OnHoverItemColor="Blue" OnHoverCancelColor="Red"
+                                        x:Name="RequestsList" 
+                                        HorizontalScrollBarVisibility="Always"
+                                        VerticalScrollBarVisibility="Always"
+                                        ChildrenReordered="Ecv_OnChildrenReordered"
+                                        SelectionChangedCommand="{Binding SelectionChangedCommand}"
+                                        TapCommand="{Binding TapCommand}"
+                                        DoubleTapCommand="{Binding DoubleTapCommand}"
+                                        EnableGrouping="True" GroupSplitter="Name"
+                                        ItemDragStarted="Ecv_OnItemDragStarted"
+                                        ItemIntersecting="Ecv_OnItemIntersecting"
+                                        ItemDropped="Ecv_OnItemDropped"
+                                        ItemSourceChanged="Ecv_OnItemSourceChanged"
+                                        DraggedItemOpacity="0.2">
+                <control:ExtendedCollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame BorderColor="Black" >
+                            <StackLayout Orientation="Horizontal" Margin="5">
+                                <Label Text="{Binding ., UserNickName}" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
+                                <Label Text="{Binding ., Status}" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                <Label Text="{Binding ., RequestDate}" HorizontalOptions="End" VerticalOptions="Center"/>
+                            </StackLayout>
+                        </Frame>
+
+                    </DataTemplate>
+                </control:ExtendedCollectionView.ItemTemplate>
+
+                <control:ExtendedCollectionView.SelectedItemTemplate>
+                    <DataTemplate>
+                        <Frame BorderColor="Gray">
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="{Binding ., UserNickName}" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </StackLayout>
+                        </Frame>
+
+                    </DataTemplate>
+                </control:ExtendedCollectionView.SelectedItemTemplate>
+            </control:ExtendedCollectionView>
+
+            <StackLayout Orientation="Horizontal" Margin="5">
+                <Button Text="Refresh" Command="{Binding RefreshCommand}" 
+                    CommandParameter="{Binding Source={x:Reference RequestsList}}"/>
+            </StackLayout>
+
+        </StackLayout>-->
         <StackLayout>
             <ListView x:Name="RequestsList" 
                       SeparatorColor="Black" 
