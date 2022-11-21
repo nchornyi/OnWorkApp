@@ -9,6 +9,8 @@ using OnWork.Models;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Rg.Plugins.Popup.Extensions;
+using Xamarin.Essentials;
+using Xamarin.Forms.GoogleMaps;
 
 namespace OnWork.Pages.Popup
 {
@@ -19,9 +21,18 @@ namespace OnWork.Pages.Popup
         {
             InitializeComponent();
 
-            pRouteType.ItemsSource = Enum.GetNames(typeof(ERouteSort));
+            //pRouteType.ItemsSource = Enum.GetNames(typeof(ERouteSort));
 
             LoadRequest();
+
+            var tasks = Task.Run(async () =>
+            {
+                TasksList.ItemsSource = CreateRoute();
+                TasksList.RefreshItemsSource();
+                lvInfo.ItemsSource = GetRouteInfo();
+            });
+            //TasksList.ItemsSource = CreateRoute();
+            //TasksList.RefreshItemsSource();
         }
 
         public event EventHandler<object> CallbackEvent;
@@ -45,22 +56,79 @@ namespace OnWork.Pages.Popup
             }
 
             TasksList.ItemsSource = tasksList = list;
-            lvIds.ItemsSource = Enumerable.Range(1, tasksList.Count).Select(x => x.ToString());
+            lvIds.ItemsSource = Enumerable.Range(1, tasksList.Count).Select(x => x.ToString() + ")");
         }
 
-        
-        private void btnApplyRoute_Clicked(object sender, EventArgs e)
+        private List<RouteInfo> GetRouteInfo()
         {
+            var arr = new List<Position>(tasksList.Select(x=> new Position(x.TaskLocationItem.Location.Latitude,x.TaskLocationItem.Location.Longitude)));
+            arr.Insert(0, GoogleMapsHelper.GetMyPosition());
 
+            var list = new List<RouteInfo>();
+            for (var x = 0; x < arr.Count - 1; x++)
+            {
+                var distance = GetDistance(arr[x], arr[x + 1]);
+                list.Add(new RouteInfo(distance, GetTime(distance)));
+            }
+
+            return list;
+        }
+
+        public class RouteInfo
+        {
+            public RouteInfo(double distance, double time)
+            {
+                Distance = distance;
+                Time = time;
+            }
+
+            public double Distance { get; set; }
+            public double Time { get; set; }
+        }
+
+        private double GetDistance(Position pos1, Position pos2)
+        {
+            var loc1 = new Location(pos1.Latitude, pos1.Longitude);
+            var loc2 = new Location(pos2.Latitude, pos2.Longitude);
+
+            return loc1.CalculateDistance(loc2, DistanceUnits.Kilometers);
+        }
+
+        private double GetTime(double distance, double speed = 5.0) => 60 / (speed / distance);
+        
+        private async void btnApplyRoute_Clicked(object sender, EventArgs e)
+        {
+            this.IsBusy = false;
+            await Navigation.PopPopupAsync();
+        }
+
+        private List<TaskItem> CreateRoute()
+        {
+            tasksList = new List<TaskItem>(tasksList.OrderBy(x => x.Hours.Minimum));
+
+            //var type = Enum.Parse(typeof(ERouteSort), pRouteType.SelectedItem.ToString());
+            //switch (type)
+            //{
+            //    case ERouteSort.Price:
+            //        tasksList = new List<TaskItem>(tasksList.OrderByDescending(x => x.Price));
+
+            //        break;
+            //    case ERouteSort.Distance:
+            //        tasksList = new List<TaskItem>(tasksList.OrderByDescending(x => x.GetDistance()));
+
+            //        break;
+
+            //    default:
+            //        break;
+            //}
+
+            return Globals.RouteItems = tasksList;
         }
 
         private void PRouteType_OnSelectedIndexChanged(object sender, EventArgs e)
         {
-            tasksList.Reverse();
-            //TasksList.ItemsSource = null;
             TasksList.ItemsSource = tasksList;
             TasksList.RefreshItemsSource();
-
             btnApplyFilter.IsEnabled = true;
             btnApplyFilter.BackgroundColor = Color.LightGreen;
         }
@@ -74,7 +142,7 @@ namespace OnWork.Pages.Popup
 
         protected override void OnDisappearing()
         {
-            CallbackEvent?.Invoke(this, null);
+            CallbackEvent?.Invoke(this, tasksList);
             base.OnDisappearing();
         }
 

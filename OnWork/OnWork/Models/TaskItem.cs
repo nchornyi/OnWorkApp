@@ -4,6 +4,7 @@ using OnWork.Generics;
 using Xamarin.Forms;
 using OnWork.Infrastructure;
 using Xamarin.Essentials;
+using Xamarin.Forms.GoogleMaps;
 
 namespace OnWork.Models
 {
@@ -55,6 +56,10 @@ namespace OnWork.Models
 
             return distance;
         }
-        
+
+        public Position GetPosition() => HasLocation() 
+            ? new Position(TaskLocationItem.Location.Latitude, TaskLocationItem.Location.Longitude)
+            : new Position();
+
     }
 }

@@ -19,18 +19,19 @@
     </pages:PopupPage.Animation>
     <Frame CornerRadius="15" BackgroundColor="White" VerticalOptions="Center" 
                      HorizontalOptions="Center" 
-                     Margin="40,10">
+                     Margin="10, 10, 20 ,10">
         <StackLayout>
             <Label HorizontalOptions="Center" FontSize="24" FontAttributes="Bold">Create Route</Label>
 
-            <StackLayout Margin="10">
+            <!--<StackLayout Margin="10">
                 <Picker x:Name="pRouteType" Title="        Select Route Type" 
                         SelectedIndexChanged="PRouteType_OnSelectedIndexChanged"/>
-            </StackLayout>
+            </StackLayout>-->
 
             <Grid Padding="0, 10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="50"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
@@ -46,14 +47,37 @@
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
-                                        <Label Grid.Row="0" Grid.Column="0" Text="{Binding}" Margin="10,25,0,5" TextColor="Black" />
+                                        <Label Grid.Row="0" Grid.Column="0" Text="{Binding}" Margin="10,25,0,5" HorizontalOptions="Start" TextColor="Black" />
                                     </Grid>
                                 </ViewCell.View>
                             </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <StackLayout Spacing="5" Grid.Column="1">
+
+                <ListView Grid.Column="1" x:Name="lvInfo" HasUnevenRows="True" >
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <ViewCell.View>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="30"></RowDefinition>
+                                            <RowDefinition Height="30"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label Grid.Row="0" Text="{Binding ., Distance, StringFormat='{0:F1}km'}"  HorizontalOptions="Start" VerticalOptions="End"/>
+                                        <Label Grid.Row="1" Text="{Binding ., Time, StringFormat='{0:F1}min'}" HorizontalOptions="Start" VerticalOptions="Start"/>
+                                    </Grid>
+                                </ViewCell.View>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+                <StackLayout Spacing="5" Grid.Column="2">
                 <control:ExtendedCollectionView 
                     SelectionMode="Single" ItemsSize="60" SpanCount="2"
                     OrientationMode="Vertical" ItemsSpacing="5"
@@ -73,23 +97,31 @@
                     ItemIntersecting="Ecv_OnItemIntersecting"
                     ItemDropped="Ecv_OnItemDropped"
                     ItemSourceChanged="Ecv_OnItemSourceChanged"
-                    DraggedItemOpacity="0.2">
+                    DraggedItemOpacity="0.1">
                     <control:ExtendedCollectionView.ItemTemplate>
                         <DataTemplate>
                             <Frame BorderColor="Black" >
-                                <StackLayout Orientation="Horizontal" Margin="0">
-                                    <Label Text="{Binding ., Title}" MaxLines="1" LineBreakMode="CharacterWrap" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
-                                    <Label Text="{Binding ., Hours}" HorizontalOptions="Center" VerticalOptions="Center"/>
-                                    <Label Text="{Binding ., Price, StringFormat='Price={0}'}" HorizontalOptions="End" VerticalOptions="Center"/>
-                                </StackLayout>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="20"></RowDefinition>
+                                        <RowDefinition Height="15"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="110"/>
+                                        <ColumnDefinition Width="40"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Grid.Row="0" Grid.Column="0" Text="{Binding ., Title}" MaxLines="1" LineBreakMode="TailTruncation" WidthRequest="130" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
+                                    <Label Grid.Row="0" Grid.Column="1" Text="{Binding ., Hours}" HorizontalOptions="StartAndExpand" WidthRequest="100" VerticalOptions="Center"/>
+                                    <Label Grid.Row="0" Grid.Column="2" Text="{Binding ., Price, StringFormat='{0}$'}" HorizontalOptions="End" VerticalOptions="Start"/>
+                                </Grid>
                             </Frame>
-
                         </DataTemplate>
                     </control:ExtendedCollectionView.ItemTemplate>
 
                     <control:ExtendedCollectionView.SelectedItemTemplate>
                         <DataTemplate>
-                            <Frame BorderColor="Gray">
+                            <Frame BorderColor="MediumPurple">
                                 <StackLayout Orientation="Horizontal">
                                     <Label Text="{Binding ., UserNickName}" HorizontalOptions="Center" VerticalOptions="Center"/>
                             </StackLayout>
@@ -107,9 +139,8 @@
             </StackLayout>
         </Grid>
 
-
-            <Button x:Name="btnApplyFilter" BackgroundColor="DarkGray" IsEnabled="False" Text="Apply Filter" WidthRequest="300"
-                    Clicked="btnApplyRoute_Clicked"></Button>
+        <Button x:Name="btnApplyFilter" BackgroundColor="LightGreen" Text="Apply Route" WidthRequest="300"
+                Clicked="btnApplyRoute_Clicked"></Button>
         </StackLayout>
     </Frame>
 </pages:PopupPage>

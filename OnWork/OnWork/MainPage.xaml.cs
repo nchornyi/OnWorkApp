@@ -2,6 +2,7 @@
 using Plugin.Geolocator;
 using Rg.Plugins.Popup.Services;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -85,29 +86,9 @@ namespace OnWork
             Task.Run(() => LoadMapOnMyLocation());
             LoadPins();
 
-            //var arr = new List<Position>(map.Pins.Select(x => x.Position));
-            //arr.Add(GoogleMapsHelper.GetMyPosition());
-           
-            //DrawPoliline(arr.ToArray());
            
         }
-
-        public void DrawPoliline(params Position[] positions)
-        {
-            var polyline = new Polyline
-            {
-                StrokeColor = Color.MediumPurple,
-                StrokeWidth = 5,
-                ZIndex = 0
-            };
-
-            foreach (var position in positions)
-            {
-                polyline.Positions.Add(position);
-            }
-
-            map.Polylines.Add(polyline);
-        }
+        
         
         [Obsolete]
         private void Map_MapClicked(object sender, MapClickedEventArgs e)
@@ -304,6 +285,42 @@ namespace OnWork
 
         private void PopupClosed_CallbackEvent(object sender, object e)
         {
+            if (e is List<TaskItem> tasks)
+            {
+                var arr = new List<Position>(tasks.Select(x => x.GetPosition()));
+                arr.Add(GoogleMapsHelper.GetMyPosition());
+                DrawPoliline(arr.ToArray());
+
+                var removeList = new List<Pin>();
+                foreach (var pin in map.Pins)
+                {
+                    if (tasks.All(x => x.id != pin.Tag.ToString()))
+                        removeList.Add(pin);
+                }
+
+                foreach (var pin in removeList)
+                    map.Pins.Remove(pin);
+            }
+
+        }
+
+        public void DrawPoliline(params Position[] positions)
+        {
+            var polyline = new Polyline
+            {
+                StrokeColor = Color.MediumPurple,
+                StrokeWidth = 5,
+                ZIndex = 0
+            };
+
+            map.Polylines.Clear();
+
+            foreach (var position in positions)
+            {
+                polyline.Positions.Add(position);
+            }
+
+            map.Polylines.Add(polyline);
         }
 
         #region footer
