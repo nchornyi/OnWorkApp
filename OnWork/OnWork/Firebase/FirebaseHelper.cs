@@ -43,6 +43,8 @@ namespace OnWork
         //                   .FirstOrDefault(r => r.Object.id == id);
         public static async Task AddTaskItem(TaskItem task)
         {
+            task.Title = "a";
+            task.Desc = "b";
             await firebase.Child(ETables.Tasks.ToString()).PostAsync(task);
         }
         

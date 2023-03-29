@@ -31,7 +31,6 @@
             <Grid Padding="0, 10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="30"/>
-                    <ColumnDefinition Width="50"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
@@ -55,7 +54,7 @@
                     </ListView.ItemTemplate>
                 </ListView>
 
-                <ListView Grid.Column="1" x:Name="lvInfo" HasUnevenRows="True" >
+                <!--<ListView Grid.Column="1" x:Name="lvInfo" HasUnevenRows="True" >
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
@@ -75,9 +74,9 @@
                             </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>
-                </ListView>
+                </ListView>-->
 
-                <StackLayout Spacing="5" Grid.Column="2">
+                <StackLayout Spacing="5" Grid.Column="1">
                 <control:ExtendedCollectionView 
                     SelectionMode="Single" ItemsSize="60" SpanCount="2"
                     OrientationMode="Vertical" ItemsSpacing="5"
@@ -103,17 +102,20 @@
                             <Frame BorderColor="Black" >
                                 <Grid>
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="20"></RowDefinition>
-                                        <RowDefinition Height="15"></RowDefinition>
+                                        <RowDefinition Height="16"></RowDefinition>
+                                        <RowDefinition Height="16"></RowDefinition>
                                     </Grid.RowDefinitions>
                                         <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="110"/>
+                                        <ColumnDefinition Width="180"/>
+                                        <ColumnDefinition Width="50"/>
                                         <ColumnDefinition Width="40"/>
-                                        <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <Label Grid.Row="0" Grid.Column="0" Text="{Binding ., Title}" MaxLines="1" LineBreakMode="TailTruncation" WidthRequest="130" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
-                                    <Label Grid.Row="0" Grid.Column="1" Text="{Binding ., Hours}" HorizontalOptions="StartAndExpand" WidthRequest="100" VerticalOptions="Center"/>
-                                    <Label Grid.Row="0" Grid.Column="2" Text="{Binding ., Price, StringFormat='{0}$'}" HorizontalOptions="End" VerticalOptions="Start"/>
+                                    <Label Grid.Row="0" Grid.Column="0" Text="{Binding ., Task.TaskLocationItem.Title}" MaxLines="1" LineBreakMode="TailTruncation" WidthRequest="180" HorizontalOptions="Start" />
+                                    <Label Grid.Row="0" Grid.Column="1" Text="{Binding ., Info.Time, StringFormat='{0:F1}min'}" HorizontalOptions="StartAndExpand" VerticalOptions="Center" />
+                                    <Label Grid.Row="0" Grid.Column="2" Text="{Binding ., Info.Distance, StringFormat='{0:F1}km'}"  HorizontalOptions="Start" />
+                                    <Label Grid.Row="1" Grid.Column="0" Text="{Binding ., Task.Title}" MaxLines="1" LineBreakMode="TailTruncation" WidthRequest="180" HorizontalOptions="Start" />
+                                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding ., Task.Hours}" HorizontalOptions="StartAndExpand" WidthRequest="100" />
+                                        <Label Grid.Row="1" Grid.Column="2" Text="{Binding ., Task.Price, StringFormat='{0}$'}" HorizontalOptions="Start" />
                                 </Grid>
                             </Frame>
                         </DataTemplate>

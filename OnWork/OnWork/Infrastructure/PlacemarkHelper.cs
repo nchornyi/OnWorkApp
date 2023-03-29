@@ -12,11 +12,18 @@ namespace OnWork.Infrastructure
     {
         public static Placemark GetPlacemarkAsync(Position position)
         {
-            var placemarks = Task.Run(() => Geocoding.GetPlacemarksAsync(position.Latitude, position.Longitude));
-            placemarks.Wait();
-            var place = placemarks.Result.FirstOrDefault();
+            try
+            {
+                var placemarks = Task.Run(() => Geocoding.GetPlacemarksAsync(position.Latitude, position.Longitude));
+                placemarks.Wait();
+                var place = placemarks.Result.FirstOrDefault();
 
-            return place;
+                return place;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
     }
 }

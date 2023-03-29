@@ -11,6 +11,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="0" />
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
 
@@ -35,27 +36,27 @@
         </StackLayout>
 
         <StackLayout Grid.Column="0" Grid.Row="1" Margin="0,0,0,-10">
-                <maps:Map x:Name="map" 
-                          HorizontalOptions="FillAndExpand" 
-                          VerticalOptions="FillAndExpand" 
-                          MapType="Satellite"
-                          HasZoomEnabled="True"
-                          MyLocationEnabled="True"
-                          MyLocationButtonClicked="map_MyLocationButtonClicked" />
-            </StackLayout>
-
-        <StackLayout x:Name="stckRoute" Grid.Column="0" Grid.Row="1">
-                <Button Margin="0,20,20,-68"  BorderWidth="1.5" BorderColor="Black" CornerRadius="50" BackgroundColor="{StaticResource BGDark}"
-                            WidthRequest="70" HeightRequest="70" HorizontalOptions="End" />
-                <Image x:Name="imgRoute" Aspect="Fill" Margin="0,5,30,20"
-                           WidthRequest="45" HeightRequest="45" HorizontalOptions="End">
-                    <Image.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="Route_OnTapped"/>
-                    </Image.GestureRecognizers>
-                </Image>
+            <maps:Map x:Name="map" 
+                      HorizontalOptions="FillAndExpand" 
+                      VerticalOptions="FillAndExpand" 
+                      MapType="Satellite"
+                      HasZoomEnabled="True"
+                      MyLocationEnabled="True"
+                      MyLocationButtonClicked="map_MyLocationButtonClicked" />
         </StackLayout>
 
-        <StackLayout x:Name="slFooter" Grid.Column="0" Grid.Row="2" BackgroundColor="{StaticResource BGLight}" HorizontalOptions="FillAndExpand" Orientation="Horizontal">
+        <AbsoluteLayout x:Name="stckRoute" Grid.Column="0" Grid.Row="2" Margin="320, -540, 0, 0">
+            <Button Margin="0,20,20,-68"  BorderWidth="1.5" BorderColor="Black" CornerRadius="50" BackgroundColor="{StaticResource BGDark}"
+                    WidthRequest="70" HeightRequest="70" HorizontalOptions="End" />
+            <Image x:Name="imgRoute" Aspect="Fill" Margin="15,30,0,20"
+                   WidthRequest="45" HeightRequest="45" HorizontalOptions="End">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="Route_OnTapped"/>
+                </Image.GestureRecognizers>
+            </Image>
+        </AbsoluteLayout>
+
+        <StackLayout x:Name="slFooter" Grid.Column="0" Grid.Row="3" BackgroundColor="{StaticResource BGLight}" HorizontalOptions="FillAndExpand" Orientation="Horizontal">
             <StackLayout Style="{StaticResource ButtonNavigationBarStackLayoutStyle}" x:Name="stckHome">
                 <StackLayout.GestureRecognizers>
                     <TapGestureRecognizer Tapped="Profile_OnTapped"/>

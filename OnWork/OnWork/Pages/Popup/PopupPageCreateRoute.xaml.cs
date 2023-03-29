@@ -27,9 +27,8 @@ namespace OnWork.Pages.Popup
 
             var tasks = Task.Run(async () =>
             {
-                TasksList.ItemsSource = CreateRoute();
+                TasksList.ItemsSource = CreateRouteItems();
                 TasksList.RefreshItemsSource();
-                lvInfo.ItemsSource = GetRouteInfo();
             });
             //TasksList.ItemsSource = CreateRoute();
             //TasksList.RefreshItemsSource();
@@ -55,8 +54,43 @@ namespace OnWork.Pages.Popup
                 }
             }
 
-            TasksList.ItemsSource = tasksList = list;
+            TasksList.ItemsSource = tasksList = FilterItems(list);
             lvIds.ItemsSource = Enumerable.Range(1, tasksList.Count).Select(x => x.ToString() + ")");
+        }
+
+        private List<TaskItem> FilterItems(List<TaskItem> items)
+        {
+            var filteredTaskItems = new List<TaskItem>();
+            var ignore = new List<string>();
+
+            try
+            {
+                foreach (var item in items)
+                {
+                    var delete = filteredTaskItems.Where(x => ignore.Contains(x.id)).ToList();
+                    if (delete.Any())
+                        filteredTaskItems = new List<TaskItem>(filteredTaskItems.Except(delete));
+
+                    var inRange = items.Where(x => x.Hours.ContainsRange(item.Hours)).ToList();
+                    if (!inRange.Any())
+                    {
+                        filteredTaskItems.Add(item);
+                        continue;
+                    }
+
+                    var maxPriceTask = inRange.OrderByDescending(x => x.Price).FirstOrDefault();
+                    ignore.AddRange(inRange.Where(x => x.id != maxPriceTask.id).Select(x => x.id));
+
+                    if (item.id == maxPriceTask.id && !ignore.Contains(maxPriceTask.id))
+                        filteredTaskItems.Add(item);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+
+            return filteredTaskItems;
         }
 
         private List<RouteInfo> GetRouteInfo()
@@ -72,6 +106,25 @@ namespace OnWork.Pages.Popup
             }
 
             return list;
+        }
+
+        private RouteInfo GetRouteInfo(TaskItem task)
+        {
+            var myPosition = GoogleMapsHelper.GetMyPosition();
+            var taskPosition = new Position(task.TaskLocationItem.Location.Latitude, task.TaskLocationItem.Location.Longitude);
+            var distance = GetDistance(myPosition, taskPosition);
+            return new RouteInfo(distance, GetTime(distance));
+        }
+
+        public class RouteItem
+        {
+            public RouteItem(TaskItem task, RouteInfo info)
+            {
+                Task = task;
+                Info = info;
+            }
+            public TaskItem Task { get; set; }
+            public RouteInfo Info { get; set; }
         }
 
         public class RouteInfo
@@ -100,6 +153,20 @@ namespace OnWork.Pages.Popup
         {
             this.IsBusy = false;
             await Navigation.PopPopupAsync();
+        }
+
+        private List<RouteItem> CreateRouteItems()
+        {
+            tasksList = new List<TaskItem>(tasksList.OrderBy(x => x.Hours.Minimum));
+            Globals.RouteItems = tasksList;
+
+            var list = new List<RouteItem>();
+            foreach (var item in tasksList)
+            {
+                list.Add(new RouteItem(item, GetRouteInfo(item)));
+            }
+
+            return list;
         }
 
         private List<TaskItem> CreateRoute()

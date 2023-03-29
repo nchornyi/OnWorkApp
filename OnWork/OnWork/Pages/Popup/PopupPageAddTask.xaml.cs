@@ -34,6 +34,7 @@ namespace OnWork.Pages.Popup
 
                 position = new Position(pin.Position.Latitude, pin.Position.Longitude);
                 var place = PlacemarkHelper.GetPlacemarkAsync(pin.Position);
+                if (place == null) return;
                 ELocation.Text = $"{place.Locality} {place.Thoroughfare} {place.SubThoroughfare}";
             }
         }

@@ -43,6 +43,8 @@ namespace OnWork.Models
 
         public bool IsValid()
         {
+            if (Globals.Debug) return true;
+
             return !string.IsNullOrEmpty(Title) && !string.IsNullOrEmpty(Desc) && !double.IsNaN(Price) &&
                     !string.IsNullOrEmpty(DateCreated) && !string.IsNullOrEmpty(OwnerNickName);
         }

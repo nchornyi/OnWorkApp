@@ -320,7 +320,8 @@ namespace OnWork
                 polyline.Positions.Add(position);
             }
 
-            map.Polylines.Add(polyline);
+            if (positions.Length > 1)
+                map.Polylines.Add(polyline);
         }
 
         #region footer
@@ -379,6 +380,11 @@ namespace OnWork
         {
             FirebaseHelper.CurrentUser = null;
             await App.Current.MainPage.Navigation.PopAsync();
+        }
+
+        private void OnTapped(object sender, EventArgs e)
+        {
+
         }
     }
 }
