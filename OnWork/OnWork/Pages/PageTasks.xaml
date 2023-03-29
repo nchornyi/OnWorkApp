@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OnWork.Pages.PageTasks"
+             BackgroundColor="{StaticResource BGLight}">
+    <ContentPage.Resources>
+       
+    </ContentPage.Resources>
+    <StackLayout>
+        <ListView x:Name="TasksList" SeparatorColor="Black" RefreshControlColor="Black" 
+                  ItemTapped="TasksList_ItemTapped" >
+            <ListView.Header>
+                <StackLayout BackgroundColor="#cccccc" Orientation="Horizontal">
+                    <Label WidthRequest="100" Text="Title" HorizontalOptions="Start"/>
+                    <Label WidthRequest="180" Text="Desc" HorizontalOptions="Center"/>
+                    <Label WidthRequest="50" Text="Price" HorizontalOptions="End"/>
+                </StackLayout>
+            </ListView.Header>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <ViewCell.View>
+                            <Grid BackgroundColor="#eee">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="90"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="70"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Row="0" Grid.Column="0" LineBreakMode="TailTruncation" Text="{Binding Title}" Style="{StaticResource CellStyle}" />
+                                <Label Grid.Row="0" Grid.Column="1" LineBreakMode="TailTruncation" Text="{Binding Desc}" Style="{StaticResource CellStyle}"  />
+                                <Label Grid.Row="0" Grid.Column="2" LineBreakMode="TailTruncation" Text="{Binding Price}" Style="{StaticResource CellStyle}"
+                                           TextColor="Green"/>
+                                <Image Grid.Row="0" Grid.Column="3" Source="{Binding LocationIcon}"  WidthRequest="50" HeightRequest="40"
+                                       Margin="2" HorizontalOptions="End" />
+                            </Grid>
+                            </ViewCell.View>
+                    </ViewCell>
+                </DataTemplate>
+             
+            </ListView.ItemTemplate>
+        </ListView>
+        <StackLayout x:Name="stckFilter">
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="Filter_OnTapped"/>
+                </StackLayout.GestureRecognizers>
+            <Button Margin="0,0,40,-68"  BorderWidth="1.5" BorderColor="Black" CornerRadius="50" BackgroundColor="{StaticResource BGDark}"
+                    WidthRequest="70" HeightRequest="70" HorizontalOptions="End" />
+            <Image x:Name="imgFilter" Aspect="Fill" Margin="0,0,45,20"
+                   WidthRequest="60" HeightRequest="60" HorizontalOptions="End" />
+        </StackLayout>
+
+        <Button x:Name="btnAddItem" Margin="0,0,30,30" HeightRequest="90" WidthRequest="90" HorizontalOptions="End" Text="+" CornerRadius="50"
+                BackgroundColor="{StaticResource BGDark}" Font="45" BorderWidth="1.5" BorderColor="Black"
+                Clicked="btnAddItem_Clicked"></Button>
+    </StackLayout>
+</ContentPage>

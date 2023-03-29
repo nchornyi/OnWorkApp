@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31112.23
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnWork.Android", "OnWork\OnWork.Android\OnWork.Android.csproj", "{1D6D9DDF-73F0-4F59-988D-D8EDFE587A54}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnWork", "OnWork\OnWork\OnWork.csproj", "{A6F1EF32-5F2C-413D-98A1-D1E49A43730B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnWork", "OnWork\OnWork\OnWork.csproj", "{A6F1EF32-5F2C-413D-98A1-D1E49A43730B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

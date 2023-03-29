@@ -1,8 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+    <UserSecretsId>08cb8eff-3956-4aef-9be7-f7123cd5bcb1</UserSecretsId>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -11,15 +12,94 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\clipboard.png" />
+    <None Remove="Images\filter.png" />
+    <None Remove="Images\location.png" />
+    <None Remove="Images\logo.png" />
+    <None Remove="Images\logout.png" />
+    <None Remove="Images\pin.png" />
+    <None Remove="Images\request.png" />
+    <None Remove="Images\route.png" />
+    <None Remove="Images\settings.png" />
     <None Remove="Images\test.png" />
+    <None Remove="Images\unfilter.png" />
+    <None Remove="Images\user.png" />
+    <None Remove="Images\workLocation.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Images\clipboard.png" />
+    <EmbeddedResource Include="Images\filter.png" />
+    <EmbeddedResource Include="Images\location.png" />
+    <EmbeddedResource Include="Images\logout.png" />
+    <EmbeddedResource Include="Images\OnWorkLogo.png" />
+    <EmbeddedResource Include="Images\pin.png" />
+    <EmbeddedResource Include="Images\request.png" />
+    <EmbeddedResource Include="Images\route.png" />
+    <EmbeddedResource Include="Images\settings.png" />
     <EmbeddedResource Include="Images\test.png" />
+    <EmbeddedResource Include="Images\unfilter.png" />
+    <EmbeddedResource Include="Images\user.png" />
+    <EmbeddedResource Include="Images\worklocation.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="ExtendedControls.ExtCollectionView.XForms" Version="1.0.21" />
+    <PackageReference Include="FirebaseDatabase.net" Version="4.0.6" />
+    <PackageReference Include="Google.Api.CommonProtos" Version="2.6.0" />
+    <PackageReference Include="Rg.Plugins.Popup" Version="2.0.0.11" />
+    <PackageReference Include="Xam.Plugin.Geolocator" Version="4.5.0.6" />
+    <PackageReference Include="Xamarin.CommunityToolkit" Version="1.1.0" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />
-    <PackageReference Include="Xamarin.Essentials" Version="1.6.1" />
+	  <PackageReference Include="Xamarin.Essentials" Version="1.6.1" />
+	  <PackageReference Include="Xamarin.Forms.GoogleMaps" Version="3.3.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Mono.Android">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\ReferenceAssemblies\Microsoft\Framework\MonoAndroid\v11.0\Mono.Android.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Google.Android.Material">
+      <HintPath>C:\Program Files (x86)\Microsoft\Xamarin\NuGet\xamarin.google.android.material\1.2.1.1\lib\monoandroid90\Xamarin.Google.Android.Material.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+	  <Resource Include="Images\logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Pages\Popup\PopupPageRequest.xaml.cs">
+      <DependentUpon>PopupPageRequest.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Pages\Popup\PopupPageTask.xaml.cs">
+      <DependentUpon>PopupPageTask.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Pages\Registration.xaml.cs">
+      <DependentUpon>Registration.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Pages\PageTasks.xaml.cs">
+      <DependentUpon>PageTasks.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Controls\LabeledSwitch.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Pages\Login.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Pages\PageTasks.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Pages\Popup\PopupPageAddTask.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Pages\Popup\PopupPageCreateRoute.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Pages\Popup\PopupPageFilterTasks.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Effects\" />
   </ItemGroup>
 </Project>

@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+             xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+             xmlns:control="clr-namespace:ExtendedControls.ExtCollectionView.XForms.Control;assembly=ExtendedControls.ExtCollectionView.XForms"
+             x:Class="OnWork.Pages.Popup.PopupPageCreateRoute">
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation 
+            PositionIn="Center"
+            PositionOut="Center"
+            ScaleIn="1.2"
+            ScaleOut="0.8"
+            DurationIn="400"
+            DurationOut="300"
+            EasingIn="SinOut"
+            EasingOut="SinIn"
+            HasBackgroundAnimation="True"/>
+    </pages:PopupPage.Animation>
+    <Frame CornerRadius="15" BackgroundColor="White" VerticalOptions="Center" 
+                     HorizontalOptions="Center" 
+                     Margin="10, 10, 20 ,10">
+        <StackLayout>
+            <Label HorizontalOptions="Center" FontSize="24" FontAttributes="Bold">Create Route</Label>
+
+            <!--<StackLayout Margin="10">
+                <Picker x:Name="pRouteType" Title="        Select Route Type" 
+                        SelectedIndexChanged="PRouteType_OnSelectedIndexChanged"/>
+            </StackLayout>-->
+
+            <Grid Padding="0, 10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <ListView x:Name="lvIds" HasUnevenRows="True" >
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <ViewCell.View>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="63"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label Grid.Row="0" Grid.Column="0" Text="{Binding}" Margin="10,25,0,5" HorizontalOptions="Start" TextColor="Black" />
+                                    </Grid>
+                                </ViewCell.View>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+                <!--<ListView Grid.Column="1" x:Name="lvInfo" HasUnevenRows="True" >
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <ViewCell.View>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="30"></RowDefinition>
+                                            <RowDefinition Height="30"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label Grid.Row="0" Text="{Binding ., Distance, StringFormat='{0:F1}km'}"  HorizontalOptions="Start" VerticalOptions="End"/>
+                                        <Label Grid.Row="1" Text="{Binding ., Time, StringFormat='{0:F1}min'}" HorizontalOptions="Start" VerticalOptions="Start"/>
+                                    </Grid>
+                                </ViewCell.View>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>-->
+
+                <StackLayout Spacing="5" Grid.Column="1">
+                <control:ExtendedCollectionView 
+                    SelectionMode="Single" ItemsSize="60" SpanCount="2"
+                    OrientationMode="Vertical" ItemsSpacing="5"
+                    SelectionChanging="Ecv_OnSelectionChanging"
+                    SelectionChanged="Ecv_OnSelectionChanged"
+                    DefaultSelectedItemColor="LightGray" DragNDropEnabled="True"
+                    OnHoverItemColor="Blue" OnHoverCancelColor="Red"
+                    x:Name="TasksList" 
+                    HorizontalScrollBarVisibility="Always"
+                    VerticalScrollBarVisibility="Always"
+                    ChildrenReordered="Ecv_OnChildrenReordered"
+                    SelectionChangedCommand="{Binding SelectionChangedCommand}"
+                    TapCommand="{Binding TapCommand}"
+                    DoubleTapCommand="{Binding DoubleTapCommand}"
+                    EnableGrouping="True" GroupSplitter="Name"
+                    ItemDragStarted="Ecv_OnItemDragStarted"
+                    ItemIntersecting="Ecv_OnItemIntersecting"
+                    ItemDropped="Ecv_OnItemDropped"
+                    ItemSourceChanged="Ecv_OnItemSourceChanged"
+                    DraggedItemOpacity="0.1">
+                    <control:ExtendedCollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame BorderColor="Black" >
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="16"></RowDefinition>
+                                        <RowDefinition Height="16"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="180"/>
+                                        <ColumnDefinition Width="50"/>
+                                        <ColumnDefinition Width="40"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Grid.Row="0" Grid.Column="0" Text="{Binding ., Task.TaskLocationItem.Title}" MaxLines="1" LineBreakMode="TailTruncation" WidthRequest="180" HorizontalOptions="Start" />
+                                    <Label Grid.Row="0" Grid.Column="1" Text="{Binding ., Info.Time, StringFormat='{0:F1}min'}" HorizontalOptions="StartAndExpand" VerticalOptions="Center" />
+                                    <Label Grid.Row="0" Grid.Column="2" Text="{Binding ., Info.Distance, StringFormat='{0:F1}km'}"  HorizontalOptions="Start" />
+                                    <Label Grid.Row="1" Grid.Column="0" Text="{Binding ., Task.Title}" MaxLines="1" LineBreakMode="TailTruncation" WidthRequest="180" HorizontalOptions="Start" />
+                                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding ., Task.Hours}" HorizontalOptions="StartAndExpand" WidthRequest="100" />
+                                        <Label Grid.Row="1" Grid.Column="2" Text="{Binding ., Task.Price, StringFormat='{0}$'}" HorizontalOptions="Start" />
+                                </Grid>
+                            </Frame>
+                        </DataTemplate>
+                    </control:ExtendedCollectionView.ItemTemplate>
+
+                    <control:ExtendedCollectionView.SelectedItemTemplate>
+                        <DataTemplate>
+                            <Frame BorderColor="MediumPurple">
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="{Binding ., UserNickName}" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </StackLayout>
+                            </Frame>
+
+                        </DataTemplate>
+                    </control:ExtendedCollectionView.SelectedItemTemplate>
+                </control:ExtendedCollectionView>
+
+            <!--<StackLayout Orientation="Horizontal" Margin="5">
+                <Button Text="Refresh" Command="{Binding RefreshCommand}" 
+                    CommandParameter="{Binding Source={x:Reference RequestsList}}"/>
+            </StackLayout>-->
+
+            </StackLayout>
+        </Grid>
+
+        <Button x:Name="btnApplyFilter" BackgroundColor="LightGreen" Text="Apply Route" WidthRequest="300"
+                Clicked="btnApplyRoute_Clicked"></Button>
+        </StackLayout>
+    </Frame>
+</pages:PopupPage>

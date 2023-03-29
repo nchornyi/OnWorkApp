@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="OnWork.FirebaseHelper">
+    <Position X="15.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAgYEIAAAAAAAAAAAAAAgQIAIBAgEAAAAEAABAA=</HashCode>
+      <FileName>Firebase\FirebaseHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OnWork.Models.AddressInfo">
+    <Position X="11.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEAAAAAIAAAIAAAAAAAAAAADAAAABAAAAAA=</HashCode>
+      <FileName>Models\GoogleMapsModels.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OnWork.Models.GoogleMapsPlaces">
+    <Position X="9.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAJAAAAAgBAAAAAAAAACQAAAQAAAAAAAAAAAAIAAAAg=</HashCode>
+      <FileName>Models\GoogleMapsPlaces.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Addresses" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="OnWork.Models.TaskItem">
+    <Position X="9.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAECAAAAAAAAABAAAAAAAAAAEQBAAggA=</HashCode>
+      <FileName>Models\TaskItem.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Requests" />
+      <Property Name="TaskLocationItem" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="OnWork.Models.TaskLocation">
+    <Position X="11.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEAAAAIAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\TaskLocation.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Location" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="OnWork.Models.TaskRequest">
+    <Position X="11.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAgAAAAAAAAAAAAAAAABAAAAAAAAAAAQgA=</HashCode>
+      <FileName>Models\TaskRequest.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Status" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="OnWork.Models.User">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACgQAAAEAAAgA=</HashCode>
+      <FileName>Models\User.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Settings" />
+      <Property Name="Info" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="OnWork.Models.UserInfo">
+    <Position X="5.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAgAAAAAAAAAAAAAAAAAAEAAAAACAAAAAA=</HashCode>
+      <FileName>Models\UserInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OnWork.Models.UserSettings">
+    <Position X="5.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\UserSettings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Plugin.Geolocator.Abstractions.Position">
+    <Position X="14" Y="3" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Enum Name="OnWork.Models.EUserType">
+    <Position X="7.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Enums.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="OnWork.Models.ETables">
+    <Position X="5.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIABAAAAA=</HashCode>
+      <FileName>Models\Enums.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="OnWork.Models.EStatus">
+    <Position X="14" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAIAAAAAAAAAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Enums.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+             xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+             xmlns:views="http://xamarin.com/schemas/2020/toolkit"
+             x:Class="OnWork.Pages.Popup.PopupPageAddTask">
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation 
+            PositionIn="Center"
+            PositionOut="Center"
+            ScaleIn="1.2"
+            ScaleOut="0.8"
+            DurationIn="400"
+            DurationOut="300"
+            EasingIn="SinOut"
+            EasingOut="SinIn"
+            HasBackgroundAnimation="True"/>
+    </pages:PopupPage.Animation>
+    <Frame CornerRadius="15" BackgroundColor="White" VerticalOptions="Center" 
+                     HorizontalOptions="Center" 
+                     Margin="40,10">
+        <StackLayout>
+            <Label HorizontalOptions="Center" FontSize="24" FontAttributes="Bold">Create Task</Label>
+            <!--<ActivityIndicator x:Name="activityIndicator" IsRunning="{Binding IsBusy}" VerticalOptions="Center" HorizontalOptions="Center" />-->
+            <Label>Title</Label>
+            <Entry x:Name="ETitle"></Entry>
+            <Picker x:Name="pTaskType" Title="Select Task Type" 
+                    ItemsSource="{Binding TaskTypesList}" />
+            <Label>Description</Label>
+            <Entry  x:Name="EDescription"></Entry>
+            <!--<Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="180"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions> 
+                <Stepper x:Name="sHours" Grid.Column="0" Value="1" Minimum="0.5" Maximum="12" Increment="0.5" HorizontalOptions="Start" />
+                <Label Grid.Column="1" BindingContext="{x:Reference sHours}" Text="{Binding Value}" FontSize="24" VerticalOptions="Center" HorizontalOptions="Center" />
+            </Grid>-->
+            <StackLayout Margin="10">
+                <Label HorizontalTextAlignment="Start">Hours</Label>
+                <views:RangeSlider
+                    x:Name="rsTime"
+                    MaximumValue="24"
+                    MinimumValue="0"
+                    StepValue="0.5"
+                    LowerValue="10"
+                    UpperValue="18" />
+            </StackLayout>
+            <Label>Location</Label>
+            <Grid VerticalOptions="FillAndExpand">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="60"/>
+                </Grid.ColumnDefinitions>
+                <Entry x:Name="ELocation" FontSize="12" Grid.Column="0"></Entry>
+                <StackLayout x:Name="stckLocation" Grid.Column="1">
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Location_OnTapped"/>
+                    </StackLayout.GestureRecognizers>
+                    <!--<Button Margin="0,0,40,-68"  BorderWidth="1.5" BorderColor="Black" CornerRadius="50" BackgroundColor="{StaticResource BGDark}"
+                            WidthRequest="70" HeightRequest="70" HorizontalOptions="End" />-->
+                    <Image x:Name="imgSelectLocation" WidthRequest="25" HeightRequest="40" Aspect="AspectFit" />
+                </StackLayout>
+
+            </Grid>
+            <!--<ListView
+                x:Name="lvLocations"
+                HeightRequest="110"
+                ItemTapped="ItemSelected"
+                SeparatorVisibility="None">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout BackgroundColor="#eee" Orientation="Horizontal">
+                                <Label Text="{Binding Title}" Margin="5"
+                                TextColor="Black" />
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>-->
+
+            <Label>Price</Label>
+            <Entry x:Name="EPrice" Keyboard="Numeric"></Entry>
+            <Button x:Name="btnAdd" BackgroundColor="LightGreen" Text="Add Task" WidthRequest="300"
+                    Clicked="btnAdd_Clicked"></Button>
+        </StackLayout>
+    </Frame>
+</pages:PopupPage>

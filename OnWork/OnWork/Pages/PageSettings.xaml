@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OnWork.Pages.PageSettings">
+    <ContentPage.Content>
+        <StackLayout Margin="27" Orientation="Horizontal">
+            <Label Text="MapType:" FontSize="25" TextColor="Black"
+                VerticalOptions="Start" 
+                HorizontalOptions="Start" />
+            <Picker x:Name="MapTypePicker" SelectedIndexChanged="MapTypePicker_SelectedIndexChanged" Title="Select map type"  SelectedItem="{Binding SelectedColorName, Mode=TwoWay}"
+                    VerticalOptions="Start" HorizontalOptions="Start"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OnWork.Pages.PageProfile"
+             BackgroundColor="{StaticResource BGLight}">
+    <ContentPage.Content>
+        <StackLayout BackgroundColor="{StaticResource BGLight}" Margin="40">
+            <Image Margin="50,10,50,0"  WidthRequest="150" x:Name="userImage"  VerticalOptions="Start"  HorizontalOptions="CenterAndExpand"/>
+            <Button Clicked="btnAddImage" Margin="190,-50,90,20" 
+                    TextColor="Black" 
+                    BackgroundColor="{StaticResource BGDark}" 
+                    CornerRadius="50" 
+                    WidthRequest="10" HeightRequest="50" Text="+" />
+            <Label>Mobile number</Label>
+            <Entry x:Name="eMobileNumber" Text="{Binding MobileNumber}"></Entry>
+            <Label>Description (Decribe your experiance and skills)</Label>
+            <Entry x:Name="eDescription" Text="{Binding Description}"></Entry>
+            <Button Clicked="btnSave_Click" Text="Save" HeightRequest="50" TextColor="Black" BackgroundColor="{StaticResource BGDark}" CornerRadius="50" WidthRequest="20" ></Button>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
